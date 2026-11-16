@@ -5,13 +5,27 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 ## Agora
 - Fase: requisitos e modelagem (cronograma: nov/2026–fev/2027).
 - Sprint atual: —
-- Em andamento: configuração do repo para agentes.
+- Concluído: configuração do repo para agentes (PR #2).
+- Em andamento: ADR da escolha do Flutter (branch docs/adr-escolha-flutter).
+
+## Plano de sprints (fonte: cronograma do projeto PIBIC)
+- Sprint 1: check-in digital.
+- Sprint 2: monitoramento da fila de espera.
+- Sprint 3: notificações automáticas.
+- Sprint 4: integração e testes.
+- Não começar um sprint fora desta ordem sem registrar a mudança aqui.
+
+## Combinados da dupla
+- Os dois usam Claude Code; AGENTS.md vale para qualquer outra ferramenta.
+- Memória compartilhada: este arquivo, na raiz. Só muda via PR.
+- Idioma: português, com identificadores técnicos em inglês.
+- A main é protegida; todo PR é revisado pelo colega.
 
 ## Decisões vigentes (ADRs aceitos)
 - (nenhuma ainda)
 
 ## Propostas abertas
-- (nenhuma ainda)
+- Flutter como plataforma mobile (ADR 2026-11-16-escolha-do-flutter, status Proposto).
 
 ## Pendências e dúvidas
 - Definir stack mobile, backend e serviço de push.
