@@ -1,0 +1,3 @@
+# Regras de análise estática (o "linter" do Dart). Equivale a um verificador de
+# estilo e de erros comuns que roda com `dart analyze`.
+include: package:lints/recommended.yaml

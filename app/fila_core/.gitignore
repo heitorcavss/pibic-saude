@@ -1,0 +1,4 @@
+# Gerados automaticamente pelo `dart pub get`; não vão para o Git.
+.dart_tool/
+# Em pacotes (bibliotecas) o pubspec.lock não é versionado.
+pubspec.lock
