@@ -7,7 +7,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Sprint atual: —
 - Concluído: configuração do repo para agentes (PR #2).
 - Concluído: ADR da escolha do Flutter aceito (spike na branch spike/flutter-basico).
-- Em andamento: confirmar o app em Android e escolher backend, banco e push (ADR próprio).
+- Em andamento: ADR de backend, banco e push (rascunho; falta pesquisar as opções).
+- Em andamento: confirmar o app em Android.
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
 - Sprint 1: check-in digital.
@@ -27,11 +28,12 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Flutter (Dart) como plataforma mobile: docs/adr/2026-11-16-escolha-do-flutter.md.
 
 ## Propostas abertas
-- (nenhuma ainda)
+- Backend, banco e push: docs/adr/2026-11-17-backend-banco-push.md (Proposto;
+  rascunho, comparação ainda a pesquisar). Firebase foi só uma sugestão inicial.
 
 ## Pendências e dúvidas
-- Definir backend, banco e serviço de push (próximo ADR; o tempo real da fila
-  entra junto).
+- Decidir backend, banco e serviço de push (ADR em rascunho; o tempo real da
+  fila entra junto).
 - Confirmar o app em Android (emulador ou aparelho): o spike foi só web.
 - Migrar ou não para o pacote material_ui (aviso de obsolescência do
   material.dart no Flutter 3.50).
