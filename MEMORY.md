@@ -29,7 +29,7 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 
 ## Propostas abertas
 - Backend, banco e push: docs/adr/2026-11-17-backend-banco-push.md (Proposto;
-  rascunho, comparação ainda a pesquisar). Firebase foi só uma sugestão inicial.
+  rascunho, comparação ainda a pesquisar; issue #5). Firebase foi só uma sugestão inicial.
 
 ## Pendências e dúvidas
 - Decidir backend, banco e serviço de push (ADR em rascunho; o tempo real da
