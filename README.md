@@ -29,8 +29,17 @@ unidade ou dados móveis do paciente).
 Miguel e Heitor (Eng. de Software, IFG). Orientação: Profa. Celyce Lula.
 
 ## Como rodar
-O app mobile usa Flutter (ver docs/adr/). O app ainda não existe na `main`;
-um spike descartável está na branch `spike/flutter-basico`.
+O app mobile usa Flutter (ver docs/adr/). O código do app mora em `app/`
+(ver [app/README.md](app/README.md)). Por enquanto existe só o núcleo da fila,
+em Dart puro: [app/fila_core](app/fila_core/README.md). As telas ainda não
+existem; um spike descartável de tela está na branch `spike/flutter-basico`.
+
+Para testar o núcleo da fila:
+```bash
+cd app/fila_core
+dart pub get
+dart test
+```
 
 Pré-requisitos para desenvolver:
 1. Git.
@@ -43,5 +52,6 @@ Comandos do dia a dia: ver a seção "Comandos" do AGENTS.md.
 ## Organização
 - AGENTS.md: regras para agentes de IA.
 - MEMORY.md: estado atual do projeto.
+- app/: onde o app mora (todo o código). Hoje: `app/fila_core`, o núcleo da fila.
 - docs/adr/: decisões de arquitetura.
 - docs/requisitos/, docs/modelagem/: requisitos e diagramas.
