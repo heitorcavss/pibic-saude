@@ -55,3 +55,4 @@ Comandos do dia a dia: ver a seção "Comandos" do AGENTS.md.
 - app/: onde o app mora (todo o código). Hoje: `app/fila_core`, o núcleo da fila.
 - docs/adr/: decisões de arquitetura.
 - docs/requisitos/, docs/modelagem/: requisitos e diagramas.
+- docs/pesquisa/: material de apoio à pesquisa (links e datasets).

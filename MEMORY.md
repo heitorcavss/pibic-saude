@@ -40,7 +40,10 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   depois os demais, desempatando por chegada. Veio do conhecimento geral da
   legislação, não de documento da unidade. Em unidade de saúde a classificação
   de risco clínico costuma vir antes da prioridade legal; esta versão não a
-  considera. Confirmar na visita à unidade e com a orientadora.
+  considera. Confirmar na visita à unidade e em pesquisas posteriores.
+- Decisões de projeto do algoritmo (ordenar a cada consulta, desempate,
+  null versus erro, ausência de desistência etc.) e pendências: seção
+  "Decisões de projeto do algoritmo" em app/fila_core/README.md.
 - Fora do escopo por enquanto: telas, backend, persistência, notificações,
   classificação de risco, estimativa de tempo de espera.
 - Testes: `cd app/fila_core && dart test`.

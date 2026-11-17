@@ -41,11 +41,23 @@ conforme a convenção da linguagem (Dart: `dart format` e as regras do
 `flutter_lints`). Mais detalhes entram conforme o projeto crescer.
 
 ## Comandos
-Rode dentro da pasta do app Flutter (o local do app ainda será definido na
-primeira implementação).
+Todo o código do app mora em `app/`, uma subpasta por parte (ver
+app/README.md). Rode os comandos **dentro da subpasta** da parte que quer
+verificar.
+
+Pacotes Dart puros (hoje: `app/fila_core`, o núcleo da fila):
+- `dart pub get`: baixa as dependências.
+- `dart analyze`: análise estática (equivale ao compilador e linter).
+- `dart test`: roda os testes automatizados.
+- `dart format .`: formata o código.
+
+Partes Flutter (telas; ainda não existem):
 - `flutter pub get`: baixa as dependências.
 - `flutter analyze`: análise estática (equivale ao compilador e linter).
 - `flutter test`: roda os testes automatizados.
 - `flutter run -d chrome`: executa o app no navegador; é interativo, então
   um humano confere o resultado.
 - Android e iOS (emulador ou aparelho): ainda não validados; ver o ADR.
+
+Em pacotes Dart puros use `dart`, não `flutter`: eles não dependem do SDK do
+Flutter para rodar.

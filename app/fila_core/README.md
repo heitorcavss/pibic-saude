@@ -6,7 +6,7 @@ sozinhas.
 
 > ⚠️ **A regra de prioridade desta versão é uma HIPÓTESE.** Ela existe para o
 > núcleo funcionar e ser testado, e **não foi confirmada** com a unidade de
-> saúde nem com a orientadora. Veja [a seção sobre a hipótese](#a-regra-de-prioridade-é-uma-hipótese).
+> saúde nem por pesquisas posteriores. Veja [a seção sobre a hipótese](#a-regra-de-prioridade-é-uma-hipótese).
 
 ## O que ele faz
 
@@ -60,8 +60,40 @@ de um documento da unidade:
 **Ressalva importante:** em unidade de saúde, a *classificação de risco clínico*
 costuma vir **antes** da prioridade legal (um caso grave passa na frente de um
 idoso estável). Esta versão **não considera risco clínico**. A regra real deve
-ser confirmada na visita à unidade e com a orientadora. Antes de citar as leis em
-qualquer relatório, confira o texto atual no site do Planalto.
+ser confirmada na visita à unidade e em pesquisas posteriores. Antes de citar as
+leis em qualquer relatório, confira o texto atual no site do Planalto.
+
+## Decisões de projeto do algoritmo
+
+Escolhas feitas ao escrever a `Fila`. Todas são **discutíveis**: vale revisá-las
+quando houver dados reais ou necessidade nova. Quando uma for decidida de vez e
+tiver impacto no restante do app, vira ADR.
+
+1. **Ordenar a cada consulta ou manter a lista ordenada.**
+   - Hoje o código copia e ordena a lista em toda chamada de `chamarProximo`,
+     `posicaoDe` e `pacientesEmOrdem`.
+   - Vantagem: simples e sem risco de a lista ficar fora de ordem.
+   - Custo: trabalho repetido, e o `indexOf` do desempate percorre a lista a
+     cada empate.
+   - Não há medição no projeto, então não se sabe se isso pesa para o tamanho
+     real da fila. A alternativa é inserir já na posição certa.
+2. **Empate resolvido pela ordem de entrada na fila**, e não por outro critério.
+   A ordem de entrada não é a hora de chegada: um paciente pode entrar depois
+   com chegada anterior (o teste "ordem de chegada sem prioridade" usa isso).
+3. **Ausência vira `null`** em fila vazia (`chamarProximo`) e em id desconhecido
+   (`posicaoDe`), mas **id repetido lança erro**. O código mistura os dois
+   estilos. O comentário só justifica o erro do id; a escolha do `null` não tem
+   justificativa escrita.
+4. **A posição começa em 1**, enquanto os índices da lista começam em 0.
+5. **A unicidade do id só vale entre quem espera.** Quem já foi chamado saiu da
+   lista, então o mesmo id pode entrar de novo. É consequência do código; o
+   comentário não discute.
+6. **Cópia defensiva** em `pacientesEmOrdem`: quem recebe a lista não consegue
+   bagunçar a fila por dentro.
+7. **A `Fila` só usa o `id` do paciente.** `chegada` e `prioridade` ficam
+   inteiramente com a regra de ordenação.
+8. **Não existe método para tirar alguém sem chamá-lo** (por exemplo, uma
+   desistência). É uma ausência no código, e não uma decisão registrada.
 
 ## Fora do escopo desta versão
 
