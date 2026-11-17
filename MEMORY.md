@@ -6,7 +6,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Fase: requisitos e modelagem (cronograma: nov/2026–fev/2027).
 - Sprint atual: —
 - Concluído: configuração do repo para agentes (PR #2).
-- Em andamento: ADR da escolha do Flutter (branch docs/adr-escolha-flutter).
+- Concluído: ADR da escolha do Flutter aceito (spike na branch spike/flutter-basico).
+- Em andamento: confirmar o app em Android e escolher backend, banco e push (ADR próprio).
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
 - Sprint 1: check-in digital.
@@ -20,15 +21,20 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Memória compartilhada: este arquivo, na raiz. Só muda via PR.
 - Idioma: português, com identificadores técnicos em inglês.
 - A main é protegida; todo PR é revisado pelo colega.
+- Spikes (experimentos descartáveis) ficam em branches spike/* e não entram na main.
 
 ## Decisões vigentes (ADRs aceitos)
-- (nenhuma ainda)
+- Flutter (Dart) como plataforma mobile: docs/adr/2026-11-16-escolha-do-flutter.md.
 
 ## Propostas abertas
-- Flutter como plataforma mobile (ADR 2026-11-16-escolha-do-flutter, status Proposto).
+- (nenhuma ainda)
 
 ## Pendências e dúvidas
-- Definir stack mobile, backend e serviço de push.
+- Definir backend, banco e serviço de push (próximo ADR; o tempo real da fila
+  entra junto).
+- Confirmar o app em Android (emulador ou aparelho): o spike foi só web.
+- Migrar ou não para o pacote material_ui (aviso de obsolescência do
+  material.dart no Flutter 3.50).
 - Quem atribui o fator de risco: o profissional de saúde ou o administrador?
 - Qual escala de risco será usada (níveis, cores ou protocolo existente)?
 - Como estimar o tempo de espera no início, sem média de atendimentos anteriores?

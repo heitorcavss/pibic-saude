@@ -29,7 +29,16 @@ unidade ou dados móveis do paciente).
 Miguel e Heitor (Eng. de Software, IFG). Orientação: Profa. Celyce Lula.
 
 ## Como rodar
-A definir após a escolha da stack.
+O app mobile usa Flutter (ver docs/adr/). O app ainda não existe na `main`;
+um spike descartável está na branch `spike/flutter-basico`.
+
+Pré-requisitos para desenvolver:
+1. Git.
+2. Flutter SDK (canal stable) no PATH; confira com `flutter doctor`.
+3. Um editor com o plugin Dart/Flutter (por exemplo, IntelliJ IDEA).
+4. Para Android: Android Studio (SDK e emulador).
+
+Comandos do dia a dia: ver a seção "Comandos" do AGENTS.md.
 
 ## Organização
 - AGENTS.md: regras para agentes de IA.
