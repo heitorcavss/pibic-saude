@@ -35,6 +35,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Confirmar o app em Android (emulador ou aparelho): o spike foi só web.
 - Migrar ou não para o pacote material_ui (aviso de obsolescência do
   material.dart no Flutter 3.50).
+- Antes de usar qualquer dataset público, checar licença e LGPD. Links
+  levantados: docs/pesquisa/2026-11-17-links-datasets-simulacao-filas.md.
 - Quem atribui o fator de risco: o profissional de saúde ou o administrador?
 - Qual escala de risco será usada (níveis, cores ou protocolo existente)?
 - Como estimar o tempo de espera no início, sem média de atendimentos anteriores?
