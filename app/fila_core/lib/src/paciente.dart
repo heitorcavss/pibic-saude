@@ -6,7 +6,7 @@
 ///
 /// ⚠️ HIPÓTESE: estes três valores são um ponto de partida. A classificação
 /// real da unidade (por exemplo, risco clínico por cores) ainda não foi
-/// definida e será confirmada na visita à unidade de saúde.
+/// definida e será confirmada na visita à unidade ou pesquisas posteriores.
 enum TipoPrioridade {
   /// Sem prioridade legal. Atendido por ordem de chegada.
   nenhuma,

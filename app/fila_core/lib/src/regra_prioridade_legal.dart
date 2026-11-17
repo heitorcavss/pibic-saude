@@ -24,7 +24,7 @@ import 'regra_ordenacao.dart';
 /// Em unidade de saúde, a **classificação de risco clínico** costuma vir ANTES
 /// da prioridade legal (um caso grave passa na frente de um idoso estável).
 /// Esta regra ainda não considera risco clínico. A regra real deve ser
-/// confirmada na visita à unidade e com a orientadora. Confira também o texto
+/// confirmada na visita à unidade e pesquisas posteriores. Confira também o texto
 /// atual das leis no site do Planalto antes de citá-las em qualquer relatório.
 class RegraPrioridadeLegal implements RegraOrdenacao {
   const RegraPrioridadeLegal();
