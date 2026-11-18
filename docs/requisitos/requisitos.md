@@ -38,6 +38,7 @@ do projeto PIBIC).
 | RF05 | Após o check-in, o app deve mostrar ao paciente a confirmação e a posição atual na fila (`Fila.posicaoDe`). | código |
 | RF06 | A recepção deve poder ver quem fez check-in. | hipótese |
 | RF07 | O check-in deve indicar o tipo de atendimento ou o local (consultório/sala). | a confirmar |
+| RF23 | Ao entrar na fila, o paciente deve receber uma senha de atendimento (por exemplo, um número sequencial do dia), para ser chamado por ela. O núcleo da fila ainda não gera senha. O ID segue a ordem de criação, não a de sprint. | hipótese; formato da senha a confirmar na unidade |
 | RF08 | Deve ser possível validar que o paciente está de fato na unidade (por exemplo, QR code no local ou geolocalização). | hipótese |
 
 ## Sprint 2 — Monitoramento da fila de espera
@@ -94,5 +95,6 @@ Perguntas já registradas no MEMORY.md, que bloqueiam ou mudam requisitos:
    prioridade legal? (RF04, RF14)
 5. Como estimar o tempo de espera sem histórico? (RF13)
 6. Existe distinção entre recepção e profissional de saúde na unidade? (atores)
+7. Como a unidade chama o paciente hoje (senha impressa, nome, número)? Qual é o formato da senha? (RF23)
 
 Todas dependem da visita à unidade ou de decisão da dupla.
