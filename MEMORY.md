@@ -7,9 +7,10 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Sprint atual: —
 - Concluído: configuração do repo para agentes (PR #2).
 - Concluído: ADR da escolha do Flutter aceito (spike na branch spike/flutter-basico).
-- Concluído (aguardando revisão): núcleo da fila em Dart puro, em
-  `app/fila_core` (branch feat/nucleo-fila). Ver "Núcleo da fila" abaixo.
-- Em andamento: confirmar o app em Android e escolher backend, banco e push (ADR próprio).
+- Concluído: núcleo da fila em Dart puro, em `app/fila_core` (PR #8). Ver
+  "Núcleo da fila" abaixo.
+- Em andamento: ADR de backend, banco e push (pesquisa feita em 2026-11-18; proposta Supabase + FCM, aguardando revisão e aceite).
+- Em andamento: confirmar o app em Android.
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
 - Sprint 1: check-in digital.
@@ -52,11 +53,18 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Flutter (Dart) como plataforma mobile: docs/adr/2026-11-16-escolha-do-flutter.md.
 
 ## Propostas abertas
-- (nenhuma ainda)
+- Backend, banco e push: docs/adr/2026-11-17-backend-banco-push.md (Proposto;
+  issue #5, PR #7). Proposta: Supabase + FCM, sem servidor próprio.
+  Premissas: protótipo, só planos gratuitos, UBS pequena, Android e iOS, dupla
+  com Python/SQL. Falta a dupla aceitar.
 
 ## Pendências e dúvidas
-- Definir backend, banco e serviço de push (próximo ADR; o tempo real da fila
-  entra junto).
+- Decidir backend, banco e serviço de push (ADR com recomendação; o tempo real
+  da fila entra junto).
+- Alguém tem conta Apple Developer (paga) para o push no iOS? Sem ela, o push
+  só é validado no Android.
+- O projeto gratuito do Supabase pausa após 1 semana sem uso: confirmar o
+  ping e planejar as demonstrações.
 - Confirmar o app em Android (emulador ou aparelho): o spike foi só web.
 - Migrar ou não para o pacote material_ui (aviso de obsolescência do
   material.dart no Flutter 3.50).
