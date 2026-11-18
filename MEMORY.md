@@ -7,7 +7,7 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Sprint atual: —
 - Concluído: configuração do repo para agentes (PR #2).
 - Concluído: ADR da escolha do Flutter aceito (spike na branch spike/flutter-basico).
-- Em andamento: ADR de backend, banco e push (pesquisa feita em 2026-11-18; recomendação Supabase + FCM, aguardando decisão da dupla).
+- Em andamento: ADR de backend, banco e push (pesquisa feita em 2026-11-18; proposta Supabase + FCM, aguardando revisão e aceite).
 - Em andamento: confirmar o app em Android.
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
@@ -29,7 +29,7 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 
 ## Propostas abertas
 - Backend, banco e push: docs/adr/2026-11-17-backend-banco-push.md (Proposto;
-  issue #5, PR #7). Recomendação: Supabase + FCM, sem servidor próprio.
+  issue #5, PR #7). Proposta: Supabase + FCM, sem servidor próprio.
   Premissas: protótipo, só planos gratuitos, UBS pequena, Android e iOS, dupla
   com Python/SQL. Falta a dupla aceitar.
 

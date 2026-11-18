@@ -87,12 +87,12 @@ Apple Developer Program (cerca de US$ 99/ano) e aparelho físico para testar.
 Sem essa conta, o push só pode ser validado no Android.
 
 ## Decisão
-Em aberto. **Recomendação da pesquisa:** Supabase (banco, auth, tempo real,
-regras de acesso) + FCM (push), sem servidor próprio nesta fase. Só um
-humano muda o status para "Aceito".
+**Proposta:** usar o Supabase (banco, auth, tempo real, regras de acesso) e
+o FCM (push), sem servidor próprio nesta fase. Esta decisão só vale depois
+que a revisão for feita e um humano mudar o status para "Aceito".
 
 ## Consequências
-Se a recomendação for aceita:
+Se a proposta for aceita:
 - Não há servidor para manter; a lógica da fila e da estimativa de espera
   fica em SQL (funções e gatilhos), e as regras de acesso em RLS.
 - Python sai do caminho crítico; pode servir a scripts de simulação e teste
