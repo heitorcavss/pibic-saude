@@ -13,8 +13,11 @@ Ver MEMORY.md. Ele é a fonte do que está decidido e em andamento.
 
 ## Stack
 - App mobile: Flutter (Dart), conforme o ADR 2026-11-16-escolha-do-flutter.
-- Backend, banco e serviço de push: ainda não definidos. Não presuma.
-  Se a tarefa exigir essa escolha, proponha um ADR (docs/adr/) e pare.
+- Backend, banco e push: Supabase (banco, auth, tempo real, regras de acesso)
+  e FCM (push), sem servidor próprio, conforme o ADR
+  2026-11-17-backend-banco-push.
+- Qualquer outra escolha de arquitetura (nova plataforma, serviço ou mudança
+  nas acima): proponha um ADR (docs/adr/) e pare.
 
 ## Como trabalhar
 - Comece cada tarefa com um plano curto e espere aprovação humana.

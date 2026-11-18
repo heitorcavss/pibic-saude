@@ -62,8 +62,6 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Nenhuma no momento.
 
 ## Pendências e dúvidas
-- Atualizar a seção "Stack" do AGENTS.md com o backend aceito (decisão da
-  dupla; ainda não feito).
 - Login gov.br como alternativa de identificação do paciente: exige cadastro
   do sistema junto ao governo. Ver RF01 em docs/requisitos/requisitos.md.
 - Alguém tem conta Apple Developer (paga) para o push no iOS? Sem ela, o push

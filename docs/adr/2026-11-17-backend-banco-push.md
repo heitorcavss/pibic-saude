@@ -106,7 +106,8 @@ revisão do PR #7.
 
 Atualizações que a aceitação pede:
 - `AGENTS.md`: seção "Stack" (backend, banco e push deixam de ser
-  "não definidos") e a seção "Comandos", se houver novos. **Ainda não feito.**
+  "não definidos") e a seção "Comandos", se houver novos. Stack feito no PR #18;
+  "Comandos" sem novidades até existir código de backend.
 - `MEMORY.md`: "Decisões vigentes" e "Pendências". Feito no PR #18.
 
 ## Perguntas em aberto
