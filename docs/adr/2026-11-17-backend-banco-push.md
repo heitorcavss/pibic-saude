@@ -1,7 +1,7 @@
 # 2026-11-17 — Backend, banco de dados e notificações push
 
-Status: Proposto
-Autor: Heitor   Aprovado por: —
+Status: Aceito
+Autor: Heitor   Aprovado por: Miguel (2026-11-18)
 
 > Pesquisa feita em 2026-11-18 com documentações oficiais e, onde indicado,
 > fontes secundárias. Os números de planos gratuitos mudam; reconferir antes
@@ -87,12 +87,12 @@ Apple Developer Program (cerca de US$ 99/ano) e aparelho físico para testar.
 Sem essa conta, o push só pode ser validado no Android.
 
 ## Decisão
-**Proposta:** usar o Supabase (banco, auth, tempo real, regras de acesso) e
-o FCM (push), sem servidor próprio nesta fase. Esta decisão só vale depois
-que a revisão for feita e um humano mudar o status para "Aceito".
+Usar o Supabase (banco, auth, tempo real, regras de acesso) e o FCM (push),
+sem servidor próprio nesta fase. Aceita por Miguel em 2026-11-18, com os
+números de planos gratuitos e os termos de LGPD ainda a reconferir (ver
+"Perguntas em aberto").
 
 ## Consequências
-Se a proposta for aceita:
 - Não há servidor para manter; a lógica da fila e da estimativa de espera
   fica em SQL (funções e gatilhos), e as regras de acesso em RLS.
 - Python sai do caminho crítico; pode servir a scripts de simulação e teste
@@ -103,12 +103,9 @@ Se a proposta for aceita:
 - Push no iOS depende de conta Apple paga.
 - Estimativa de escala (cálculo da pesquisa, sem dados reais): 50 pacientes
   com 40 atualizações por dia dão cerca de 60 mil mensagens Realtime por mês,
-  contra 2 milhões de cota. Reavaliar após as visitas de campo.
-
-Ao aceitar, atualizar no mesmo PR:
-- `AGENTS.md`: seção "Stack" (backend, banco e push deixam de ser
-  "não definidos") e a seção "Comandos", se houver novos.
-- `MEMORY.md`: "Decisões vigentes" e "Pendências".
+  contra 2 milhões de cota. Reavaliar após as visitas de campo. Conferir se a
+  contagem de mensagens do Supabase considera a entrega a cada aparelho
+  conectado: nesse caso o consumo seria maior que o estimado.
 
 ## Perguntas em aberto
 - Alguém (IFG ou orientadora) tem conta Apple Developer para o push no iOS?
