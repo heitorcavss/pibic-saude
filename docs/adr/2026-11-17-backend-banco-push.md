@@ -50,6 +50,7 @@ render.com/docs/free, pub.dev.
 | Tempo real | Listeners nativos do Firestore | Realtime nativo: no plano grátis, 200 conexões, 100 msg/s e 2 mi msgs/mês | Implementar WebSocket à mão |
 | Push | FCM nativo | Sem push próprio; guia oficial usa webhook do banco + Edge Function (TypeScript) + API v1 do FCM | FCM via `firebase-admin` (Python) |
 | LGPD / região | São Paulo (`southamerica-east1`) disponível; localização não muda depois | Região São Paulo (`sa-east-1`) aparece na listagem (termos de dados: a confirmar) | Depende da hospedagem |
+| LGPD / exclusão | O dono do projeto (vocês) apaga os dados; Google atua como operador. Dados de usuário no Auth saem de sistemas ativos e backups em até 180 dias. Extensão "Delete User Data" apaga dados do Firestore ligados ao UID (por padrão, só o documento, sem subcoleções). Termos citam GDPR e CCPA, não a LGPD (a confirmar) | Vocês respondem ao titular; o Supabase só repassa pedidos (DPA). Apagar usuário: `auth.admin.deleteUser` (exige a chave `service_role`, só em servidor; quem tem objetos no Storage não pode ser apagado antes). Projeto apagado: dados removidos em até 30 dias; backups seguem outro prazo. Termos citam GDPR, não a LGPD (a confirmar) | Total (vocês mesmos apagam), mas a responsabilidade e a hospedagem são de vocês |
 | Custo | Spark: 1 GiB, 50 mil leituras/dia, 20 mil escritas/dia; FCM grátis; **sem Cloud Functions** (exige Blaze, com cartão) | 500 MB, 50 mil usuários ativos/mês; **pausa após 1 semana sem uso** | Render grátis dorme após 15 min (~1 min para acordar); Postgres grátis expira em 30 dias; Railway sem plano grátis permanente; Fly.io: fontes conflitantes |
 | Esforço | Baixo, mas o disparo do push exige servidor ou Blaze | Baixo: lógica em SQL/RLS; uma Edge Function em TypeScript para o push | Alto: a dupla mantém servidor e hospedagem |
 | Pacote Flutter | `firebase_core`/`cloud_firestore` e `firebase_messaging` 17.1.0 (publisher firebase.google.com, verificado; Android, iOS, web) | `supabase_flutter` 2.18.3 (publisher supabase.io, verificado; Android, iOS, web, desktop) + `firebase_messaging` | `http`/`dio` + `firebase_messaging` |
@@ -63,6 +64,23 @@ render.com/docs/free, pub.dev.
   usa o FCM de qualquer jeito (o Supabase não tem push próprio).
 - **Backend próprio:** é o único caminho com Python, mas a hospedagem
   gratuita atual atrapalha demonstrações e deixa a dupla mantendo infra.
+
+**FCM e exclusão:** o token do aparelho e o ID de instalação do Firebase
+ficam retidos até uma chamada de exclusão do dono do projeto; os dados são
+removidos de sistemas ativos e backups em até 180 dias, e apagar o token não
+apaga o ID de instalação. A documentação diz que esses dados em geral não
+identificam a pessoa. Se o app guardar o token junto do cadastro do paciente
+(como no guia do Supabase), o token vira dado ligado a ele e entra na rotina
+de exclusão.
+
+**Fontes da exclusão:** supabase.com/legal/customer-resources/data-processing-addendum,
+supabase.com/legal/privacy-resources/data-residency-and-transfers-faq,
+supabase.com/docs/guides/auth/managing-user-data,
+firebase.google.com/terms/data-processing-terms,
+firebase.google.com/docs/extensions/official/delete-user-data,
+firebase.google.com/docs/projects/manage-installations.
+Os prazos são da documentação, não de parecer jurídico: confirmar com a
+orientadora antes de qualquer uso com dados reais.
 
 **Push no iOS (a confirmar, só fontes secundárias):** exige conta paga do
 Apple Developer Program (cerca de US$ 99/ano) e aparelho físico para testar.
