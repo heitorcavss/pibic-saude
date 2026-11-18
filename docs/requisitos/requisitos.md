@@ -38,7 +38,7 @@ do projeto PIBIC).
 | RF05 | Após o check-in, o app deve mostrar ao paciente a confirmação e a posição atual na fila (`Fila.posicaoDe`). | código |
 | RF06 | A recepção deve poder ver quem fez check-in. | hipótese |
 | RF07 | O check-in deve indicar o tipo de atendimento ou o local (consultório/sala). | a confirmar |
-| RF08 | Deve ser possível validar que o paciente está de fato na unidade (por exemplo, QR code no local ou geolocalização). | a confirmar |
+| RF08 | Deve ser possível validar que o paciente está de fato na unidade (por exemplo, QR code no local ou geolocalização). | hipótese |
 
 ## Sprint 2 — Monitoramento da fila de espera
 
