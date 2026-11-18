@@ -31,7 +31,7 @@ do projeto PIBIC).
 
 | ID | Requisito | Origem |
 |----|-----------|--------|
-| RF01 | O paciente deve conseguir se identificar no app (cadastro e login), com o mínimo de dados necessário. Alternativas: login do Supabase (e-mail ou telefone), ou login gov.br (OAuth/OpenID Connect; entrega o CPF, que é dado pessoal, e exige cadastro do sistema junto ao governo, a confirmar com o IFG ou a orientadora; roteiro oficial: https://roteiro-tecnico.acesso.gov.br/). | cronograma; forma de identificação a confirmar |
+| RF01 | O paciente deve conseguir se identificar no app (cadastro e login), com o mínimo de dados necessário. Opções, em ordem de preferência: (1) login gov.br (OAuth/OpenID Connect; entrega o CPF, que é dado pessoal, e exige cadastro do sistema junto ao governo, a confirmar com o IFG ou a orientadora, issue #19; roteiro oficial: https://roteiro-tecnico.acesso.gov.br/); (2) cadastro simples próprio, com nome, senha e idade, só com dados fictícios, já que o app não será lançado; (3) login anônimo com código de atendimento. | cronograma; forma de identificação a confirmar |
 | RF02 | O paciente deve conseguir fazer o check-in ao chegar à unidade. | cronograma |
 | RF03 | O check-in deve inserir o paciente na fila (operação `Fila.entrar`). | código |
 | RF04 | O paciente deve poder informar condição que dá prioridade legal (por exemplo, idade 80+, gestante, pessoa com deficiência), conforme as leis hoje assumidas pelo núcleo da fila. | hipótese (ver `RegraPrioridadeLegal`) |
