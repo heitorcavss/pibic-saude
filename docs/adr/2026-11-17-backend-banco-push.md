@@ -1,7 +1,7 @@
 # 2026-11-17 — Backend, banco de dados e notificações push
 
-Status: Proposto
-Autor: Heitor   Aprovado por: —
+Status: Aceito (2026-11-18)
+Autor: Heitor   Aprovado por: Miguel e Heitor
 
 > Pesquisa feita em 2026-11-18 com documentações oficiais e, onde indicado,
 > fontes secundárias. Os números de planos gratuitos mudam; reconferir antes
@@ -87,12 +87,11 @@ Apple Developer Program (cerca de US$ 99/ano) e aparelho físico para testar.
 Sem essa conta, o push só pode ser validado no Android.
 
 ## Decisão
-**Proposta:** usar o Supabase (banco, auth, tempo real, regras de acesso) e
-o FCM (push), sem servidor próprio nesta fase. Esta decisão só vale depois
-que a revisão for feita e um humano mudar o status para "Aceito".
+Usar o Supabase (banco, auth, tempo real, regras de acesso) e o FCM (push),
+sem servidor próprio nesta fase. Aceita pela dupla em 2026-11-18, após a
+revisão do PR #7.
 
 ## Consequências
-Se a proposta for aceita:
 - Não há servidor para manter; a lógica da fila e da estimativa de espera
   fica em SQL (funções e gatilhos), e as regras de acesso em RLS.
 - Python sai do caminho crítico; pode servir a scripts de simulação e teste
@@ -105,10 +104,10 @@ Se a proposta for aceita:
   com 40 atualizações por dia dão cerca de 60 mil mensagens Realtime por mês,
   contra 2 milhões de cota. Reavaliar após as visitas de campo.
 
-Ao aceitar, atualizar no mesmo PR:
+Atualizações que a aceitação pede:
 - `AGENTS.md`: seção "Stack" (backend, banco e push deixam de ser
-  "não definidos") e a seção "Comandos", se houver novos.
-- `MEMORY.md`: "Decisões vigentes" e "Pendências".
+  "não definidos") e a seção "Comandos", se houver novos. **Ainda não feito.**
+- `MEMORY.md`: "Decisões vigentes" e "Pendências". Feito no PR #18.
 
 ## Perguntas em aberto
 - Alguém (IFG ou orientadora) tem conta Apple Developer para o push no iOS?

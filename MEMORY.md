@@ -9,7 +9,9 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Concluído: ADR da escolha do Flutter aceito (spike na branch spike/flutter-basico).
 - Concluído: núcleo da fila em Dart puro, em `app/fila_core` (PR #8). Ver
   "Núcleo da fila" abaixo.
-- Em andamento: ADR de backend, banco e push (pesquisa feita em 2026-11-18; proposta Supabase + FCM, aguardando revisão e aceite).
+- Concluído: ADR de backend, banco e push aceito em 2026-11-18 (PR #7):
+  Supabase + FCM.
+- Em andamento: requisitos e modelagem (issue #12, PR #18).
 - Em andamento: confirmar o app em Android.
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
@@ -51,16 +53,19 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 
 ## Decisões vigentes (ADRs aceitos)
 - Flutter (Dart) como plataforma mobile: docs/adr/2026-11-16-escolha-do-flutter.md.
+- Backend, banco e push: Supabase + FCM, sem servidor próprio:
+  docs/adr/2026-11-17-backend-banco-push.md (issue #5, PR #7).
+  Premissas: protótipo, só planos gratuitos, UBS pequena, Android e iOS, dupla
+  com Python/SQL.
 
 ## Propostas abertas
-- Backend, banco e push: docs/adr/2026-11-17-backend-banco-push.md (Proposto;
-  issue #5, PR #7). Proposta: Supabase + FCM, sem servidor próprio.
-  Premissas: protótipo, só planos gratuitos, UBS pequena, Android e iOS, dupla
-  com Python/SQL. Falta a dupla aceitar.
+- Nenhuma no momento.
 
 ## Pendências e dúvidas
-- Decidir backend, banco e serviço de push (ADR com recomendação; o tempo real
-  da fila entra junto).
+- Atualizar a seção "Stack" do AGENTS.md com o backend aceito (decisão da
+  dupla; ainda não feito).
+- Login gov.br como alternativa de identificação do paciente: exige cadastro
+  do sistema junto ao governo. Ver RF01 em docs/requisitos/requisitos.md.
 - Alguém tem conta Apple Developer (paga) para o push no iOS? Sem ela, o push
   só é validado no Android.
 - O projeto gratuito do Supabase pausa após 1 semana sem uso: confirmar o
