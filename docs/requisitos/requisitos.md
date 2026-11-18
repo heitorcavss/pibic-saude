@@ -90,6 +90,14 @@ Perguntas já registradas no MEMORY.md, que bloqueiam ou mudam requisitos:
 
 1. Como o paciente se identifica, respeitando a LGPD? (RF01)
 2. Como o app conhece o local de atendimento? Cadastro de consultórios e salas. (RF07)
+   **Em aberto para a visita à unidade.** Opções em avaliação:
+   - A: fila única da unidade; o local aparece só na chamada.
+   - B: uma fila por tipo de atendimento, com salas cadastradas.
+   - C: uma fila por sala (pesada para o protótipo).
+   A visita deve responder:
+   - Quais serviços e salas existem (acolhimento, consulta, vacina, curativo, odontologia etc.)?
+   - A fila é única na recepção ou uma por serviço?
+   - Quem decide para onde o paciente vai e quem o chama?
 3. Quem atribui o fator de risco e qual escala é usada? (RF15)
 4. Qual critério de prioridade a unidade usa e como combina risco clínico com
    prioridade legal? (RF04, RF14)
