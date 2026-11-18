@@ -7,6 +7,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Sprint atual: —
 - Concluído: configuração do repo para agentes (PR #2).
 - Concluído: ADR da escolha do Flutter aceito (spike na branch spike/flutter-basico).
+- Concluído: núcleo da fila em Dart puro, em `app/fila_core` (PR #8). Ver
+  "Núcleo da fila" abaixo.
 - Em andamento: ADR de backend, banco e push (pesquisa feita em 2026-11-18; proposta Supabase + FCM, aguardando revisão e aceite).
 - Em andamento: confirmar o app em Android.
 
@@ -23,6 +25,29 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Idioma: português, com identificadores técnicos em inglês.
 - A main é protegida; todo PR é revisado pelo colega.
 - Spikes (experimentos descartáveis) ficam em branches spike/* e não entram na main.
+
+## Estrutura do código
+- `app/` é onde o app mora: todo o código fica nela, uma subpasta por parte
+  (cada uma com o seu `pubspec.yaml`). Ver app/README.md.
+- `app/fila_core/`: núcleo da fila, Dart puro (sem tela, internet ou banco).
+
+## Núcleo da fila (app/fila_core)
+- Mecanismo fixo: `Fila` com `entrar`, `chamarProximo`, `posicaoDe`, `tamanho`,
+  `estaVazia`. Regra de ordenação trocável: interface `RegraOrdenacao`
+  (padrão Strategy).
+- Regras existentes: `RegraOrdemDeChegada` e `RegraPrioridadeLegal`.
+- **HIPÓTESE (não confirmada):** `RegraPrioridadeLegal` ordena por 80+, depois
+  prioridade legal (Leis 10.048/2000, 10.741/2003, 13.466/2017, 13.146/2015),
+  depois os demais, desempatando por chegada. Veio do conhecimento geral da
+  legislação, não de documento da unidade. Em unidade de saúde a classificação
+  de risco clínico costuma vir antes da prioridade legal; esta versão não a
+  considera. Confirmar na visita à unidade e em pesquisas posteriores.
+- Decisões de projeto do algoritmo (ordenar a cada consulta, desempate,
+  null versus erro, ausência de desistência etc.) e pendências: seção
+  "Decisões de projeto do algoritmo" em app/fila_core/README.md.
+- Fora do escopo por enquanto: telas, backend, persistência, notificações,
+  classificação de risco, estimativa de tempo de espera.
+- Testes: `cd app/fila_core && dart test`.
 
 ## Decisões vigentes (ADRs aceitos)
 - Flutter (Dart) como plataforma mobile: docs/adr/2026-11-16-escolha-do-flutter.md.
@@ -43,6 +68,10 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Confirmar o app em Android (emulador ou aparelho): o spike foi só web.
 - Migrar ou não para o pacote material_ui (aviso de obsolescência do
   material.dart no Flutter 3.50).
+- Antes de usar qualquer dataset público, checar licença e LGPD. Links
+  levantados: docs/pesquisa/2026-11-17-links-datasets-simulacao-filas.md.
+- Confirmar ou substituir a regra de prioridade (HIPÓTESE) do núcleo da fila:
+  qual critério a unidade usa e como combina risco clínico com prioridade legal.
 - Quem atribui o fator de risco: o profissional de saúde ou o administrador?
 - Qual escala de risco será usada (níveis, cores ou protocolo existente)?
 - Como estimar o tempo de espera no início, sem média de atendimentos anteriores?
