@@ -110,6 +110,8 @@ Perguntas já registradas no MEMORY.md, que bloqueiam ou mudam requisitos:
    - se as consultas agendadas atrasam a demanda espontânea e como;
    - o que a recepção responde hoje a quem pergunta quanto falta.
 6. Existe distinção entre recepção e profissional de saúde na unidade? (atores)
+   **A levantar na visita de 2026-11-19.**
 7. Como a unidade chama o paciente hoje (senha impressa, nome, número)? Qual é o formato da senha? (RF23)
+   **A levantar na visita de 2026-11-19.**
 
 Todas dependem da visita à unidade ou de decisão da dupla.
