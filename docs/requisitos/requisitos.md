@@ -49,7 +49,8 @@ do projeto PIBIC).
 | RF10 | O profissional deve poder chamar o próximo paciente (`Fila.chamarProximo`). | código |
 | RF11 | A recepção deve ver a fila completa, na ordem definida pela regra de ordenação ativa. | hipótese |
 | RF12 | O paciente deve poder desistir da fila. O núcleo ainda não tem essa operação. | pendência registrada no README do `fila_core` |
-| RF13 | O app pode mostrar uma estimativa de tempo de espera. | a confirmar (sem histórico de atendimentos no início) |
+| RF13 | O app deve mostrar uma estimativa de tempo de espera como faixa (por exemplo, 20 a 30 min), não como número exato. Ela começa com a duração média por tipo de atendimento coletada na visita à unidade e passa a usar a média real medida pelo app. | hipótese; durações a coletar na visita |
+| RF24 | O sistema deve registrar o início e o fim de cada atendimento, para medir a duração real. O núcleo da fila só tem `chamarProximo`, sem o "fim". O ID segue a ordem de criação. | hipótese; depende do RF13 |
 | RF14 | A regra de ordenação deve ser trocável sem mudar a fila. | código (`RegraOrdenacao`) |
 | RF15 | Quem atribui o fator de risco e qual escala é usada (níveis, cores ou protocolo existente). | a confirmar |
 
@@ -101,7 +102,13 @@ Perguntas já registradas no MEMORY.md, que bloqueiam ou mudam requisitos:
 3. Quem atribui o fator de risco e qual escala é usada? (RF15)
 4. Qual critério de prioridade a unidade usa e como combina risco clínico com
    prioridade legal? (RF04, RF14)
-5. Como estimar o tempo de espera sem histórico? (RF13)
+5. Como estimar o tempo de espera sem histórico? (RF13, RF24)
+   Caminho escolhido: opção C (faixa de tempo; valor inicial fixo por tipo de
+   atendimento e depois média real medida pelo app), a partir do que for
+   coletado na visita. A visita deve levantar:
+   - quanto dura, em média, cada tipo de atendimento;
+   - se as consultas agendadas atrasam a demanda espontânea e como;
+   - o que a recepção responde hoje a quem pergunta quanto falta.
 6. Existe distinção entre recepção e profissional de saúde na unidade? (atores)
 7. Como a unidade chama o paciente hoje (senha impressa, nome, número)? Qual é o formato da senha? (RF23)
 

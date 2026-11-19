@@ -1,7 +1,7 @@
 # 2026-11-17 — Backend, banco de dados e notificações push
 
-Status: Aceito (2026-11-18)
-Autor: Heitor   Aprovado por: Miguel e Heitor
+Status: Aceito
+Autor: Heitor   Aprovado por: Miguel (2026-11-18)
 
 > Pesquisa feita em 2026-11-18 com documentações oficiais e, onde indicado,
 > fontes secundárias. Os números de planos gratuitos mudam; reconferir antes
@@ -88,8 +88,9 @@ Sem essa conta, o push só pode ser validado no Android.
 
 ## Decisão
 Usar o Supabase (banco, auth, tempo real, regras de acesso) e o FCM (push),
-sem servidor próprio nesta fase. Aceita pela dupla em 2026-11-18, após a
-revisão do PR #7.
+sem servidor próprio nesta fase. Aceita por Miguel em 2026-11-18, com os
+números de planos gratuitos e os termos de LGPD ainda a reconferir (ver
+"Perguntas em aberto").
 
 ## Consequências
 - Não há servidor para manter; a lógica da fila e da estimativa de espera
@@ -102,13 +103,9 @@ revisão do PR #7.
 - Push no iOS depende de conta Apple paga.
 - Estimativa de escala (cálculo da pesquisa, sem dados reais): 50 pacientes
   com 40 atualizações por dia dão cerca de 60 mil mensagens Realtime por mês,
-  contra 2 milhões de cota. Reavaliar após as visitas de campo.
-
-Atualizações que a aceitação pede:
-- `AGENTS.md`: seção "Stack" (backend, banco e push deixam de ser
-  "não definidos") e a seção "Comandos", se houver novos. Stack feito no PR #18;
-  "Comandos" sem novidades até existir código de backend.
-- `MEMORY.md`: "Decisões vigentes" e "Pendências". Feito no PR #18.
+  contra 2 milhões de cota. Reavaliar após as visitas de campo. Conferir se a
+  contagem de mensagens do Supabase considera a entrega a cada aparelho
+  conectado: nesse caso o consumo seria maior que o estimado.
 
 ## Perguntas em aberto
 - Alguém (IFG ou orientadora) tem conta Apple Developer para o push no iOS?

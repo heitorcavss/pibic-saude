@@ -9,10 +9,9 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Concluído: ADR da escolha do Flutter aceito (spike na branch spike/flutter-basico).
 - Concluído: núcleo da fila em Dart puro, em `app/fila_core` (PR #8). Ver
   "Núcleo da fila" abaixo.
-- Concluído: ADR de backend, banco e push aceito em 2026-11-18 (PR #7):
-  Supabase + FCM.
-- Em andamento: requisitos e modelagem (issue #12, PR #18).
+- Concluído: ADR de backend, banco e push aceito (Supabase + FCM).
 - Em andamento: confirmar o app em Android.
+- Em andamento: requisitos e modelagem (issue #12, PR #18).
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
 - Sprint 1: check-in digital.
@@ -53,21 +52,21 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 
 ## Decisões vigentes (ADRs aceitos)
 - Flutter (Dart) como plataforma mobile: docs/adr/2026-11-16-escolha-do-flutter.md.
-- Backend, banco e push: Supabase + FCM, sem servidor próprio:
-  docs/adr/2026-11-17-backend-banco-push.md (issue #5, PR #7).
-  Premissas: protótipo, só planos gratuitos, UBS pequena, Android e iOS, dupla
-  com Python/SQL.
+- Backend, banco e push: Supabase (Postgres, Auth, Realtime, RLS) + FCM, sem
+  servidor próprio nesta fase: docs/adr/2026-11-17-backend-banco-push.md
+  (aceito por Miguel em 2026-11-18; issue #5).
 
 ## Propostas abertas
-- Nenhuma no momento.
+- (nenhuma ainda)
 
 ## Pendências e dúvidas
-- Login gov.br como alternativa de identificação do paciente: exige cadastro
-  do sistema junto ao governo. Ver RF01 em docs/requisitos/requisitos.md.
 - Alguém tem conta Apple Developer (paga) para o push no iOS? Sem ela, o push
   só é validado no Android.
 - O projeto gratuito do Supabase pausa após 1 semana sem uso: confirmar o
   ping e planejar as demonstrações.
+- Reconferir os limites do plano gratuito do Supabase (inclusive se as
+  mensagens do Realtime contam por aparelho conectado) e os termos de dados
+  frente à LGPD, antes de usar dados reais.
 - Confirmar o app em Android (emulador ou aparelho): o spike foi só web.
 - Migrar ou não para o pacote material_ui (aviso de obsolescência do
   material.dart no Flutter 3.50).
@@ -78,6 +77,9 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Quem atribui o fator de risco: o profissional de saúde ou o administrador?
 - Qual escala de risco será usada (níveis, cores ou protocolo existente)?
 - Como estimar o tempo de espera no início, sem média de atendimentos anteriores?
+  Caminho escolhido: faixa de tempo, valor inicial por tipo de atendimento
+  (coletado na visita) e depois a média real medida pelo app. Exige registrar
+  o fim do atendimento. Ver RF13 e RF24 em docs/requisitos/requisitos.md.
 - Como o paciente se identifica (cadastro e login), respeitando a LGPD?
 - Como o app conhece o local de atendimento (cadastro de consultórios/salas)?
 
