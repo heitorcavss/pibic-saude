@@ -49,6 +49,16 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   classificação de risco, estimativa de tempo de espera.
 - Testes: `cd app/fila_core && dart test`.
 
+## Modelagem (docs/modelagem)
+- Regra: só entra nos diagramas o que já está decidido. Dúvidas ficam fora do
+  desenho e aparecem em "Pendências e dúvidas". Cada arquivo traz Status, Fonte
+  e "Fora deste diagrama". Ver docs/modelagem/README.md.
+- Existem: arquitetura em componentes e fluxo do check-in à notificação
+  (Estável, vêm dos ADRs aceitos) e estados do paciente (Provisório: a visita à
+  unidade pode mudar o fluxo; revisar depois da análise das visitas).
+- Ainda não existem: casos de uso, classes e sequência (cronograma: jan/2027).
+  O escopo do UML depende da resposta da orientadora (issue #13).
+
 ## Decisões vigentes (ADRs aceitos)
 - Flutter (Dart) como plataforma mobile: docs/adr/2026-11-16-escolha-do-flutter.md.
 - Backend, banco e push: Supabase (Postgres, Auth, Realtime, RLS) + FCM, sem
@@ -69,6 +79,11 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Confirmar o app em Android (emulador ou aparelho): o spike foi só web.
 - Migrar ou não para o pacote material_ui (aviso de obsolescência do
   material.dart no Flutter 3.50).
+- Qual o papel do `fila_core` frente ao ADR de backend? O ADR põe a lógica da
+  fila e da estimativa em SQL no Supabase, e o `fila_core` é Dart puro (o
+  app/README.md diz que backend e telas se conectam ao núcleo). Ele roda no
+  app, ou serve de modelo para reescrever a regra em SQL? Decidir por ADR
+  "Proposto" antes de ligar o núcleo ao diagrama de componentes.
 - Antes de usar qualquer dataset público, checar licença e LGPD. Links
   levantados: docs/pesquisa/2026-11-17-links-datasets-simulacao-filas.md.
 - Confirmar ou substituir a regra de prioridade (HIPÓTESE) do núcleo da fila:
