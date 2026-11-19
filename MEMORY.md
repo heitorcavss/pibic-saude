@@ -11,6 +11,7 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   "Núcleo da fila" abaixo.
 - Concluído: ADR de backend, banco e push aceito (Supabase + FCM).
 - Em andamento: confirmar o app em Android.
+- Em andamento: requisitos e modelagem (issue #12, PR #18).
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
 - Sprint 1: check-in digital.
@@ -76,6 +77,9 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Quem atribui o fator de risco: o profissional de saúde ou o administrador?
 - Qual escala de risco será usada (níveis, cores ou protocolo existente)?
 - Como estimar o tempo de espera no início, sem média de atendimentos anteriores?
+  Caminho escolhido: faixa de tempo, valor inicial por tipo de atendimento
+  (coletado na visita) e depois a média real medida pelo app. Exige registrar
+  o fim do atendimento. Ver RF13 e RF24 em docs/requisitos/requisitos.md.
 - Como o paciente se identifica (cadastro e login), respeitando a LGPD?
 - Como o app conhece o local de atendimento (cadastro de consultórios/salas)?
 
