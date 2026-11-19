@@ -114,4 +114,127 @@ void main() {
       expect(fila.tamanho, 1);
     });
   });
+
+  group('Convenções da Fila', () {
+    late Fila fila;
+
+    setUp(() {
+      fila = Fila(const RegraOrdemDeChegada());
+    });
+
+    test('ausência esperada devolve nulo; contrato violado lança erro', () {
+      // Ausência esperada: a fila esvazia e o paciente pode já ter sido chamado.
+      expect(fila.chamarProximo(), isNull);
+      expect(fila.posicaoDe('inexistente'), isNull);
+
+      // Contrato violado: dois pacientes com o mesmo id.
+      fila.entrar(criarPaciente('A'));
+      expect(() => fila.entrar(criarPaciente('A')), throwsArgumentError);
+    });
+
+    test('a posição do próximo a ser chamado é 1, e não 0', () {
+      fila.entrar(criarPaciente('A', minuto: 0));
+
+      expect(fila.posicaoDe('A'), 1);
+    });
+
+    test('o mesmo id pode entrar de novo depois de ser chamado', () {
+      // A unicidade vale só entre quem espera (decisão registrada no README).
+      fila.entrar(criarPaciente('A'));
+      fila.chamarProximo();
+
+      fila.entrar(criarPaciente('A', minuto: 5));
+
+      expect(fila.tamanho, 1);
+    });
+
+    test('desempate por entrada continua certo depois de saídas da fila', () {
+      // Todos com a mesma chegada: só a ordem de entrada decide.
+      fila.entrar(criarPaciente('A', minuto: 3));
+      fila.entrar(criarPaciente('B', minuto: 3));
+      fila.entrar(criarPaciente('C', minuto: 3));
+      expect(fila.chamarProximo()?.id, 'A');
+
+      fila.entrar(criarPaciente('D', minuto: 3));
+
+      expect(fila.pacientesEmOrdem.map((p) => p.id), ['B', 'C', 'D']);
+    });
+
+    test('quem entra depois com chegada anterior passa na frente', () {
+      // Ordem de entrada não é hora de chegada: a regra manda, o desempate não.
+      fila.entrar(criarPaciente('tarde', minuto: 20));
+      fila.entrar(criarPaciente('cedo', minuto: 1));
+
+      expect(fila.chamarProximo()?.id, 'cedo');
+    });
+
+    test(
+      'pacientesEmOrdem é um retrato: não acompanha mudanças posteriores',
+      () {
+        fila.entrar(criarPaciente('A', minuto: 0));
+        final retrato = fila.pacientesEmOrdem;
+
+        fila.entrar(criarPaciente('B', minuto: 5));
+        fila.chamarProximo();
+
+        expect(retrato.map((p) => p.id), ['A']);
+        expect(fila.pacientesEmOrdem.map((p) => p.id), ['B']);
+      },
+    );
+
+    test('a fila obedece a regra recebida e não lê chegada nem prioridade', () {
+      // Regra inventada: ordem alfabética do nome. Se a Fila lesse a chegada ou
+      // a prioridade por conta própria, este teste falharia.
+      final alfabetica = Fila(_RegraAlfabetica());
+      alfabetica.entrar(
+        criarPaciente('Z', minuto: 0, prioridade: TipoPrioridade.legal80),
+      );
+      alfabetica.entrar(criarPaciente('A', minuto: 30));
+
+      expect(alfabetica.chamarProximo()?.id, 'A');
+      expect(alfabetica.chamarProximo()?.id, 'Z');
+    });
+
+    test('a ordem de chegada ignora a prioridade (quem decide é a regra)', () {
+      fila.entrar(
+        criarPaciente('idoso', minuto: 30, prioridade: TipoPrioridade.legal80),
+      );
+      fila.entrar(criarPaciente('comum', minuto: 0));
+
+      expect(fila.chamarProximo()?.id, 'comum');
+    });
+
+    test('fila grande sai exatamente na ordem de chegada', () {
+      // Sustenta a decisão de calcular a ordem na hora: 2000 pessoas, entrando
+      // em ordem embaralhada, saem corretas. Não mede tempo (testes de tempo
+      // são frágeis); a medição está descrita no README.
+      const total = 2000;
+      for (var i = 0; i < total; i++) {
+        final minutoEmbaralhado = (i * 37) % total; // 37 e 2000 são coprimos
+        fila.entrar(
+          Paciente(
+            id: 'P$minutoEmbaralhado',
+            nome: 'Paciente $minutoEmbaralhado',
+            chegada: DateTime(
+              2026,
+              1,
+              1,
+              8,
+            ).add(Duration(minutes: minutoEmbaralhado)),
+          ),
+        );
+      }
+
+      for (var esperado = 0; esperado < total; esperado++) {
+        expect(fila.chamarProximo()?.id, 'P$esperado');
+      }
+      expect(fila.estaVazia, isTrue);
+    });
+  });
+}
+
+/// Regra de teste: ordem alfabética do id, ignorando chegada e prioridade.
+class _RegraAlfabetica implements RegraOrdenacao {
+  @override
+  int comparar(Paciente a, Paciente b) => a.id.compareTo(b.id);
 }
