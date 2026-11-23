@@ -11,8 +11,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   "Núcleo da fila" abaixo.
 - Concluído: ADR de backend, banco e push aceito (Supabase + FCM).
 - Concluído: visita de campo a uma UPA de urgência em 2026-11-19. Síntese:
-  docs/pesquisa/2026-11-19-visita-upa-sintese.md (PR #21). Ver "Unidade
-  visitada" abaixo.
+  docs/pesquisa/2026-11-19-visita-upa-sintese.md (PR #21, aceito). Ver
+  "Unidade visitada" abaixo.
 - Em andamento: confirmar o app em Android.
 - Em andamento: requisitos e modelagem (issue #12, PR #18). Requisitos
   reescritos com a visita; as premissas P1 a P7 não foram validadas com a
@@ -40,15 +40,19 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 ## Unidade visitada (UPA, 2026-11-19)
 - Alvo do projeto: UPA de urgência (não é UBS). Uma tarde, ~1 h 20 min de
   observação; vale só para esse turno.
-- Estrutura: 1 guichê, 1 sala de triagem, 3 consultórios. Fila única e mista:
+- Estrutura: 1 guichê, 1 sala de triagem, cerca de 3 consultórios. Fila única e mista:
   a mesma chamada serve à triagem e à consulta.
-- Fluxo: guichê (cadastro na hora, com documento) → triagem (risco em pulseira
-  colorida; vimos verde e amarelo) → consulta.
-- Não há senha. A chamada é por nome e consultório, por voz e TV; quem chama é
-  o recepcionista, pelo painel. Sem resposta em 3 chamadas, é marcada falta e a
-  fila anda. Fora da sala quase não se ouve a chamada.
-- A unidade não informa o tempo de espera. Observado: de 2 a 41 min até a
-  triagem e de 3 a ~40 min da triagem à consulta (~8 pacientes).
+- Fluxo: guichê (cadastro na hora; nome, nascimento ou documento, e o que o
+  paciente sente) → triagem (risco em pulseira colorida; vimos verde e
+  amarelo) → consulta.
+- Não há senha. A chamada é pelo nome completo e pelo consultório, por voz e TV.
+  Sem resposta em 3 chamadas, é marcada falta. Não vimos quem opera o painel
+  nem se a fila anda sem o paciente (suposição, P5). Fora da sala quase não se
+  ouve a chamada.
+- A unidade não informa o tempo de espera. Observado (9 pacientes): de 2 a
+  pelo menos 10 min até a triagem e de 3 a mais de 36 min da triagem à
+  consulta; as esperas mais longas foram depois da triagem (gargalo não
+  confirmado).
 - A dupla não tem acesso à unidade para perguntar. O que a observação não
   mostrou virou premissa (P1 a P7), em docs/requisitos/requisitos.md.
 
@@ -113,6 +117,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   consultório só na chamada). Decisão da dupla.
 - Quem é o "cliente" que autoriza o app e a exibição do nome? Perguntar à
   orientadora (premissa P7, issue #19).
+- Quem opera o painel e avança a fila (recepção, triagem ou médico)? Não foi
+  visto (pergunta 8 em requisitos.md).
 - Uma segunda observação, sem perguntar à unidade, fecharia P1, P3 e P5 e a
   etapa que limita o fluxo. Depende de a unidade permitir.
 - Fontes de pesquisa das premissas: conferidas nos textos originais em
@@ -123,16 +129,18 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 ## Glossário do domínio
 - Triagem: sala onde um profissional classifica o risco do paciente, com
   pulseira colorida.
-- Fila de triagem: ordem de chegada (HIPÓTESE). Na visita, casos de prioridade
-  chegaram à triagem em 2 a 7 min e verdes esperaram até 41 min; a ordem real
-  não foi confirmada.
+- Fila de triagem: ordem de chegada (HIPÓTESE). Na visita, a espera até a
+  triagem foi de 2 a pelo menos 10 min nos casos com hora; a ordem real não
+  foi confirmada.
 - Fila de atendimento (consulta): ordenada por fator de risco, empate por
   chegada (HIPÓTESE, P3).
-- Recepção: cadastra o paciente no guichê e chama pelo painel (visita).
+- Recepção: cadastra o paciente no guichê (visita). Quem opera o painel não
+  foi visto.
 - Administrador: quem configura a unidade e as regras. A confirmar quem
   exerce esse papel.
 - Fator de risco: grau de prioridade atribuído na triagem, em cor; define a
   ordem na fila de atendimento (HIPÓTESE, P3).
-- Falta: paciente que não responde a 3 chamadas; a fila anda sem ele.
+- Falta: paciente que não responde a 3 chamadas. Que a fila ande sem ele é
+  suposição (P5).
 - Estimativa de tempo: tempo previsto até o chamado, mostrado como faixa e
   calculado pela média dos atendimentos anteriores e pelos pacientes à frente.
