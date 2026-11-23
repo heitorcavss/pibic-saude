@@ -115,8 +115,10 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   orientadora (premissa P7, issue #19).
 - Uma segunda observação, sem perguntar à unidade, fecharia P1, P3 e P5 e a
   etapa que limita o fluxo. Depende de a unidade permitir.
-- Conferir nos textos originais as fontes de pesquisa das premissas
-  (Manchester, Resolução COFEN, Lei 10.048): vieram de buscas na web.
+- Fontes de pesquisa das premissas: conferidas nos textos originais em
+  2026-11-23. Sem conferir: o manual da UPA 24h do Ministério da Saúde (leitura
+  parcial), o Estatuto da Pessoa Idosa além do art. 39 e a fonte oficial do
+  COFEN.
 
 ## Glossário do domínio
 - Triagem: sala onde um profissional classifica o risco do paciente, com
