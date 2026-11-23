@@ -1,8 +1,9 @@
 # Requisitos — rascunho v0
 
-Status: **rascunho para revisão da dupla e da orientadora**. Nenhum requisito
-abaixo foi validado com a unidade de saúde. Isso só acontece nas visitas de
-campo.
+Status: **rascunho para revisão da dupla e da orientadora**. Parte dos
+requisitos vem da visita de 2026-11-19 a uma UPA de urgência (síntese em
+`docs/pesquisa/2026-11-19-visita-upa-sintese.md`). Nenhum foi validado com a
+unidade: o que a visita não mostrou virou premissa (seção "Premissas").
 
 Issue de origem: #12. Ordem dos sprints: conforme o MEMORY.md (fonte: cronograma
 do projeto PIBIC).
@@ -13,7 +14,10 @@ do projeto PIBIC).
 - **Origem**:
   - `código`: já existe no núcleo da fila (`app/fila_core`);
   - `cronograma`: previsto no plano de sprints;
+  - `visita`: observado na visita de 2026-11-19 (UPA de urgência);
   - `hipótese`: inferido por nós, sem documento da unidade;
+  - `premissa (Pn)`: depende de uma premissa assumida sem validação (seção
+    "Premissas");
   - `a confirmar`: depende de resposta da unidade ou da orientadora.
 - Nível de detalhe: o Sprint 1 está mais detalhado. Os demais são só tópicos e
   serão refinados quando o sprint se aproximar.
@@ -23,43 +27,47 @@ do projeto PIBIC).
 | Ator | Descrição |
 |------|-----------|
 | Paciente | Quem usa o app para entrar na fila e acompanhá-la. |
-| Recepção | Quem recebe o paciente na unidade. **A confirmar** se é um ator distinto do profissional de saúde. |
-| Profissional de saúde | Quem chama o próximo paciente. |
+| Recepção | Quem recebe o paciente no guichê, faz o cadastro e **chama os pacientes pelo painel** (visita). É distinta do profissional de saúde. |
+| Profissional da triagem | Quem classifica o risco na sala de triagem, anexa à recepção (visita). A categoria profissional é premissa (P4). |
+| Profissional de saúde | Quem atende na consulta (3 consultórios na unidade visitada). |
 | Administrador | Quem configura a unidade (consultórios, regras). **A confirmar** quem exerce esse papel. |
 
 ## Sprint 1 — Check-in digital
 
 | ID | Requisito | Origem |
 |----|-----------|--------|
-| RF01 | O paciente deve conseguir se identificar no app (cadastro e login), com o mínimo de dados necessário. Opções, em ordem de preferência: (1) login gov.br (OAuth/OpenID Connect; entrega o CPF, que é dado pessoal, e exige cadastro do sistema junto ao governo, a confirmar com o IFG ou a orientadora, issue #19; roteiro oficial: https://roteiro-tecnico.acesso.gov.br/); (2) cadastro simples próprio, com nome, senha e idade, só com dados fictícios, já que o app não será lançado; (3) login anônimo com código de atendimento. | cronograma; forma de identificação a confirmar |
+| RF01 | O paciente deve conseguir se identificar no app (cadastro e login), com o mínimo de dados necessário. Opções, em ordem de preferência: (1) login gov.br (OAuth/OpenID Connect; entrega o CPF, que é dado pessoal, e exige cadastro do sistema junto ao governo, a confirmar com o IFG ou a orientadora, issue #19; roteiro oficial: https://roteiro-tecnico.acesso.gov.br/); (2) cadastro simples próprio, com nome, senha e idade, só com dados fictícios, já que o app não será lançado; (3) login anônimo com código de atendimento. | cronograma; forma de identificação a confirmar; visita: a unidade identifica por documento ou nome e nascimento no guichê |
 | RF02 | O paciente deve conseguir fazer o check-in ao chegar à unidade. | cronograma |
-| RF03 | O check-in deve inserir o paciente na fila (operação `Fila.entrar`). | código |
-| RF04 | O paciente deve poder informar condição que dá prioridade legal (por exemplo, idade 80+, gestante, pessoa com deficiência), conforme as leis hoje assumidas pelo núcleo da fila. | hipótese (ver `RegraPrioridadeLegal`) |
-| RF05 | Após o check-in, o app deve mostrar ao paciente a confirmação e a posição atual na fila (`Fila.posicaoDe`). | código |
-| RF06 | A recepção deve poder ver quem fez check-in. | hipótese |
-| RF07 | O check-in deve indicar o tipo de atendimento ou o local (consultório/sala). | a confirmar |
-| RF23 | Ao entrar na fila, o paciente deve receber uma senha de atendimento (por exemplo, um número sequencial do dia), para ser chamado por ela. O núcleo da fila ainda não gera senha. O ID segue a ordem de criação, não a de sprint. | hipótese; formato da senha a confirmar na unidade |
+| RF03 | O check-in deve inserir o paciente na fila, na etapa "aguardando triagem" (RF25), pela operação `Fila.entrar`. | código; visita |
+| RF04 | O paciente deve poder informar condição que dá prioridade legal: idoso (60+), gestante, lactante, pessoa com deficiência ou pessoa com criança de colo. A unidade lista essas condições como prioritárias, mas não vimos como a prioridade é aplicada. O núcleo (`RegraPrioridadeLegal`) hoje coloca 80+ antes das demais e precisa ser revisto. Como a prioridade legal se combina com o risco é a premissa P3. | visita (lista de prioridades); premissa P3; hipótese (ver `RegraPrioridadeLegal`) |
+| RF05 | Após o check-in, o app deve mostrar ao paciente a confirmação, a etapa em que está (aguardando triagem ou aguardando consulta) e a posição atual na fila (`Fila.posicaoDe`). | código; visita |
+| RF06 | A recepção deve poder ver quem fez check-in pelo app, além dos pacientes cadastrados no guichê. | hipótese; visita: hoje a recepção cadastra no guichê |
+| RF07 | Na primeira versão a fila é única, e o consultório só aparece na chamada (RF26). O check-in não escolhe tipo de atendimento nem sala. Corresponde à opção A das perguntas em aberto; a escolha final é da dupla. | visita; a decidir pela dupla |
+| RF23 | Ao entrar na fila, o paciente deve receber um código de atendimento anônimo (por exemplo, um número sequencial do dia), usado no lugar do nome para ser chamado. A unidade não usa senha hoje e chama por nome na TV. O núcleo da fila ainda não gera código. O ID segue a ordem de criação, não a de sprint. | visita (não há senha; nome na TV); proposta nossa, muda o que a unidade faz hoje |
 | RF08 | Deve ser possível validar que o paciente está de fato na unidade (por exemplo, QR code no local ou geolocalização). | hipótese |
+| RF25 | A fila tem duas etapas: aguardando triagem e aguardando consulta. O paciente passa para a segunda quando sai da triagem. A unidade visitada tem 1 sala de triagem e 3 consultórios, e a mesma chamada serve às duas etapas. O núcleo da fila hoje é uma fila só e precisa evoluir (ADR a propor; ver o modelo de estados do PR #20). O ID segue a ordem de criação. | visita |
 
 ## Sprint 2 — Monitoramento da fila de espera
 
 | ID | Requisito | Origem |
 |----|-----------|--------|
 | RF09 | O paciente deve ver a própria posição e o tamanho da fila, atualizados sem recarregar a tela. | código (`posicaoDe`, `tamanho`); atualização em tempo real depende do ADR de backend |
-| RF10 | O profissional deve poder chamar o próximo paciente (`Fila.chamarProximo`). | código |
+| RF10 | A recepção deve poder chamar o próximo paciente (`Fila.chamarProximo`). Na unidade quem chama é o recepcionista, pelo painel. Quando a chamada é para a consulta, informa o consultório (RF26). | código; visita |
 | RF11 | A recepção deve ver a fila completa, na ordem definida pela regra de ordenação ativa. | hipótese |
 | RF12 | O paciente deve poder desistir da fila. O núcleo ainda não tem essa operação. | pendência registrada no README do `fila_core` |
-| RF13 | O app deve mostrar uma estimativa de tempo de espera como faixa (por exemplo, 20 a 30 min), não como número exato. Ela começa com a duração média por tipo de atendimento coletada na visita à unidade e passa a usar a média real medida pelo app. | hipótese; durações a coletar na visita |
-| RF24 | O sistema deve registrar o início e o fim de cada atendimento, para medir a duração real. O núcleo da fila só tem `chamarProximo`, sem o "fim". O ID segue a ordem de criação. | hipótese; depende do RF13 |
-| RF14 | A regra de ordenação deve ser trocável sem mudar a fila. | código (`RegraOrdenacao`) |
-| RF15 | Quem atribui o fator de risco e qual escala é usada (níveis, cores ou protocolo existente). | a confirmar |
+| RF13 | O app deve mostrar uma estimativa de tempo de espera como faixa (por exemplo, 20 a 30 min), não como número exato, calculada por etapa (espera pela triagem e espera pela consulta). A unidade não informa o tempo restante hoje. Os valores iniciais usam a ordem de grandeza da visita, com faixa larga por causa da amostra pequena (espera até a triagem de 2 a 41 min, triagem de 2 a 6 min, triagem até a consulta de 3 a ~40 min, consulta de ~6 a mais de 24 min). Depois passa a usar a média real medida pelo app. Sem prazo por cor (P2). | visita; hipótese; premissas P2 e P6; valores a refinar em nova observação |
+| RF24 | O sistema deve registrar o início e o fim de cada etapa (triagem e consulta), para medir a duração real. Na unidade ninguém registra o fim da consulta: o paciente só vai embora. Como o fim será marcado (pela recepção, ou pela chamada seguinte no mesmo consultório) é decisão da dupla com a orientadora. O núcleo da fila só tem `chamarProximo`, sem o "fim". O ID segue a ordem de criação. | visita; hipótese; depende do RF13 |
+| RF14 | A regra de ordenação deve ser trocável sem mudar a fila. | código (`RegraOrdenacao`); premissa P3 |
+| RF15 | O app deve guardar o nível de risco do paciente depois da triagem, numa escala configurável (padrão: as 5 cores de Manchester). Na unidade o risco é atribuído na triagem e aparece em pulseira colorida; vimos verde e amarelo. Quem digita o risco no app (triagem ou recepção) é decisão da dupla. | visita; premissas P1 e P4 |
+| RF26 | A chamada deve informar o consultório junto com o código do paciente (por exemplo, "CÓDIGO – CONSULTÓRIO 3"), como a TV da unidade faz com o nome. | visita |
+| RF27 | Quem não responde após 3 chamadas deve ser marcado como falta, e a fila anda sem o paciente voltar à posição. O número de chamadas é configurável. O intervalo entre as chamadas é desconhecido. O núcleo ainda não tem essa operação. O ID segue a ordem de criação. | visita; premissa P5 |
 
 ## Sprint 3 — Notificações automáticas
 
 | ID | Requisito | Origem |
 |----|-----------|--------|
 | RF16 | O paciente deve receber notificação quando estiver perto de ser chamado. | cronograma |
-| RF17 | O paciente deve receber notificação quando for chamado. | cronograma |
+| RF17 | O paciente deve receber notificação quando for chamado, informando o consultório (RF26). Na unidade a chamada por voz e painel é muito difícil de ouvir fora da sala. | cronograma; visita |
 | RF18 | O paciente deve poder desativar as notificações. | hipótese |
 | RF19 | O limite de proximidade (quantas posições antes de avisar) deve ser configurável. | hipótese |
 
@@ -80,10 +88,11 @@ do projeto PIBIC).
 | RNF03 | Nenhuma credencial ou chave no código; uso de variáveis de ambiente. | AGENTS.md |
 | RNF04 | O protótipo deve usar apenas planos gratuitos. | premissa informada pela dupla |
 | RNF05 | O app deve rodar em Android e iOS (Flutter). | ADR do Flutter |
-| RNF06 | A interface deve ser simples e acessível, considerando pacientes idosos e com pouca familiaridade tecnológica. | hipótese |
+| RNF06 | A interface deve ser simples e acessível, considerando pacientes idosos e com pouca familiaridade tecnológica. O app complementa o painel e a recepção, que continuam existindo para quem não usa o celular. | hipótese; visita: poucas pessoas usavam o celular na espera |
 | RNF07 | A atualização da fila deve ser perceptível em poucos segundos. O número exato é a confirmar. | hipótese |
 | RNF08 | O núcleo da fila deve continuar independente de tela, internet e banco, para ser testável isoladamente. | código |
 | RNF09 | Comentários e nomes de domínio em português; `dart format` e `flutter_lints`. | AGENTS.md |
+| RNF10 | Nenhuma tela pública ou de uso coletivo deve mostrar o nome completo do paciente; usar o código de atendimento (RF23). Na unidade o nome aparece hoje na TV. | visita; LGPD (hipótese) |
 
 ## Perguntas em aberto
 
@@ -123,8 +132,8 @@ Suposições declaradas que o protótipo usa. Nenhuma foi confirmada pela unidad
 | P2 | Os prazos máximos por cor não são fixos; as fontes divergem. | RF13 | O app não usa prazo por cor na primeira versão. |
 | P3 | A ordem combina risco, prioridade legal e chegada, mas a combinação real é desconhecida. A regra padrão do protótipo é hipótese, a decidir com a orientadora. | RF04, RF14 | Regra de ordenação trocável (`RegraOrdenacao`). |
 | P4 | O profissional da triagem é enfermeiro. | RF15, atores | Os requisitos dizem "profissional da triagem", sem categoria. |
-| P5 | Quem não responde em 3 chamadas é marcado como falta e a fila anda, sem voltar à posição. Intervalo entre as chamadas desconhecido. | RF10, RF17 | Número de chamadas configurável. |
+| P5 | Quem não responde em 3 chamadas é marcado como falta e a fila anda, sem voltar à posição. Intervalo entre as chamadas desconhecido. | RF27 | Número de chamadas configurável. |
 | P6 | A UPA atende só demanda espontânea, sem consultas agendadas. | RF13 | Consulta agendada fora do escopo. |
-| P7 | A unidade (o "cliente") autoriza o app e a exibição do nome. Quem é, concretamente, fica com a orientadora (issue #19). | RF01, RNF01 | Só dados fictícios; código no lugar do nome. |
+| P7 | A unidade (o "cliente") autoriza o app e a exibição do nome. Quem é, concretamente, fica com a orientadora (issue #19). | RF01, RF23, RNF01, RNF10 | Só dados fictícios; código no lugar do nome. |
 
-Os requisitos RF04, RF10, RF13, RF23 e RF24 e os requisitos novos que a visita sugere (fila em duas etapas, chamada com consultório, falta após 3 chamadas) ainda **não foram reescritos** neste rascunho.
+Os requisitos acima já refletem estas premissas: onde um deles depende de uma, a coluna de origem cita o número (P1 a P7).
