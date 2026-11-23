@@ -113,13 +113,29 @@ A etapa que limita o fluxo (gargalo) **não está determinada**. Houve espera lo
 | Como o paciente se identifica? | Documento ou nome e nascimento no guichê (17:10). | sim |
 | Como o app conhece o local? | Fila única mista, com o consultório dito na chamada (16:27, conferência 5). | parcial |
 
-Outras dúvidas, para perguntar à equipe da unidade ou à orientadora:
+Outras dúvidas. **Não há acesso à unidade para perguntar**, então cada uma ganhou uma premissa (seção abaixo) ou vai à orientadora:
 1. Qual é o critério real de ordem na triagem e na consulta (risco, prioridade legal, chegada)? Nos casos vistos, a ordem da triagem não parece ser só a de chegada.
 2. Qual é o protocolo de classificação de risco, quem é o profissional da triagem e existem outras cores?
 3. A falta é definitiva? O paciente pode voltar?
 4. Qual o intervalo entre as 3 chamadas?
 5. Consultas agendadas interferem na demanda espontânea? Não observamos nenhuma.
 6. Quem autoriza o app e a exibição do nome? Registrado como "o próprio cliente"; confirmar quem é.
+
+### Premissas assumidas
+
+A dupla não tem como perguntar à unidade. Por isso, o que a visita não respondeu fica como **premissa**: uma suposição declarada, que o protótipo usa e que **não foi validada com a unidade**. Onde der, o app deixa a premissa configurável para não depender dela. As fontes de pesquisa abaixo vêm de buscas na web e ainda precisam ser conferidas nos textos originais.
+
+| # | Premissa | Base | Como o app se protege |
+|---|---|---|---|
+| P1 | A escala de risco é a do Protocolo de Manchester, com 5 cores: vermelho, laranja, amarelo, verde e azul. Vimos só verde e amarelo. | Pesquisa: a UPA 24h usa Manchester ([Cofen/CBCEnf](https://inscricoes-cbcenf.cofen.gov.br/anais/21/30416/trabalhoresumodownload)). Não confirmado na unidade. | A escala é uma lista configurável, sem cor fixa no código. |
+| P2 | Os prazos máximos por cor não são fixos. As fontes divergem: Rio de Janeiro 15, 30 e 60 min para laranja, amarelo e verde ([carioca.rio](https://carioca.rio/?p=71246)); Manchester em geral 10, 60, 120 e 240 min. | Pesquisa; não há tabela oficial do Ministério da Saúde nos resultados. | O app não usa prazo por cor na primeira versão. |
+| P3 | A ordem de atendimento combina risco, prioridade legal e chegada, mas a combinação real é desconhecida. O protótipo usa uma regra padrão **marcada como hipótese**, a decidir com a orientadora. | Observado: "um pouco de tudo?" (conferência 2). Pesquisa: a literatura diverge entre risco primeiro e prioridade legal do 80+ ([Fiocruz](https://www.cadernos.prodisa.fiocruz.br/index.php/cadernos/article/download/462/522)). | A regra de ordenação é trocável (`RegraOrdenacao`, RF14). |
+| P4 | O profissional da triagem é um enfermeiro. | Pesquisa: a classificação de risco é privativa do enfermeiro ([Normas Brasil](https://www.normasbrasil.com.br/norma/resolucao-423-2012_239586.html), norma revogada pela Resolução COFEN 661/2021). | Os requisitos dizem "profissional da triagem", sem categoria. |
+| P5 | Quem não responde em 3 chamadas é marcado como falta e a fila anda, sem voltar à posição. | Observado (conferência 5, e o relato da dupla). O intervalo entre as chamadas é desconhecido. | O número de chamadas é configurável. |
+| P6 | A UPA atende só demanda espontânea, sem consultas agendadas. | Nenhuma consulta agendada foi vista. É coerente com uma UPA de urgência, mas não foi confirmado. | Consulta agendada fica fora do escopo. |
+| P7 | A unidade (o "cliente") autoriza o app e a exibição do nome. Quem é, concretamente, fica com a orientadora (issue #19). | Relato da dupla. | O protótipo usa só dados fictícios e um código no lugar do nome. |
+
+Para fechar P1, P3 e P5 sem perguntar, caberia uma segunda observação só de observar: a ordem das chamadas contra a hora de chegada e a cor, o intervalo entre as 3 chamadas e as cores que aparecem. Isso depende de a unidade permitir nova visita.
 
 ### Limitações
 
@@ -130,5 +146,6 @@ Outras dúvidas, para perguntar à equipe da unidade ou à orientadora:
 - Só vimos risco verde e amarelo. A cor só é conhecida depois da triagem, então a classificação dos pacientes é posterior à sua espera.
 - Amarelo foi lido como nível de gravidade maior, não como o que o paciente sentia.
 - A contagem não foi exatamente a cada 10 min e não registrou chegadas. O guichê não variou (sempre 1).
+- Sem acesso à unidade para perguntas: o que a observação não mostrou virou premissa (P1 a P7), não resposta.
 - É uma UPA de urgência. Em uma UBS o fluxo pode ser diferente.
 - Os códigos A1 a A6 e B1 a B4 são de cada observador. Os números não repetem entre as folhas, mas a correspondência com a ordem original foi reconstruída na síntese.
