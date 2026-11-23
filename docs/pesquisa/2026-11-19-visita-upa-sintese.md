@@ -6,6 +6,23 @@
 
 **Isto vale para 19/11/2026 (quinta-feira), turno da tarde, em uma UPA de urgência, durante cerca de 1 h 20 min de observação. Não generalizar.** Os números são hipóteses para confirmar em outras coletas.
 
+## Resumo
+
+Dois observadores acompanharam cerca de 1 h 20 min na recepção e na área externa de uma UPA de urgência, numa tarde de quinta-feira movimentada. A unidade tem 1 guichê, 1 sala de triagem e 3 consultórios.
+
+**O que vimos**
+1. **Fluxo em duas etapas, com fila única e mista.** O paciente passa pelo guichê (cadastro na hora), pela triagem (risco em pulseira, verde e amarelo vistos) e pela consulta. A mesma TV chama as duas etapas.
+2. **Espera longa e desigual.** De 2 a 41 min até a triagem e de 3 a ~40 min da triagem à consulta, em cerca de 8 pacientes. Não deu para dizer qual etapa limita o fluxo.
+3. **A unidade não informa quanto falta**, em nenhuma etapa.
+4. **Não há senha.** A chamada é por nome e consultório, por voz e TV, feita pelo recepcionista. O nome fica exposto, e fora da sala a chamada quase não se ouve.
+5. **Sem resposta em 3 chamadas, é marcada falta e a fila anda.**
+6. **O critério real de ordem não apareceu.** Só a impressão "um pouco de tudo" (risco, prioridade legal, chegada).
+
+**Como usar esta síntese**
+- Vale só para essa tarde, com amostra pequena. Os tempos são ordem de grandeza.
+- A dupla não tem acesso à unidade para perguntar. O que a observação não mostrou virou **premissa (P1 a P7)**, não resposta.
+- Os pontos de dor e as ideias de funcionalidade (seção 5) alimentam os requisitos, no PR #18.
+
 ## 1. Cabeçalho
 
 | Campo | Preenchimento |
