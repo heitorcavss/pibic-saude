@@ -87,31 +87,44 @@ do projeto PIBIC).
 
 ## Perguntas em aberto
 
-Perguntas já registradas no MEMORY.md, que bloqueiam ou mudam requisitos:
+Perguntas já registradas no MEMORY.md, que bloqueiam ou mudam requisitos.
+
+A visita de 2026-11-19 (UPA de urgência, observação de ~1 h 20 min) respondeu parte delas. A síntese está em `docs/pesquisa/2026-11-19-visita-upa-sintese.md`. A dupla **não tem acesso à unidade para perguntar**, então o que a observação não mostrou virou premissa (seção "Premissas" abaixo), não resposta.
 
 1. Como o paciente se identifica, respeitando a LGPD? (RF01)
+   **Visita:** no guichê, com documento de identificação ou nome e nascimento, e o cadastro é feito na hora (~2 a 3 min). A forma de identificação no app continua decisão da dupla.
 2. Como o app conhece o local de atendimento? Cadastro de consultórios e salas. (RF07)
-   **Em aberto para a visita à unidade.** Opções em avaliação:
+   **Parcialmente respondida.** A unidade tem 1 guichê, 1 sala de triagem e 3 consultórios. A fila é única e mista (a mesma TV chama triagem e consulta), e a chamada diz o consultório ("NOME – CONSULTÓRIO N"). Isso coincide com a opção A. A escolha entre as opções segue com a dupla:
    - A: fila única da unidade; o local aparece só na chamada.
    - B: uma fila por tipo de atendimento, com salas cadastradas.
    - C: uma fila por sala (pesada para o protótipo).
-   A visita deve responder:
-   - Quais serviços e salas existem (acolhimento, consulta, vacina, curativo, odontologia etc.)?
-   - A fila é única na recepção ou uma por serviço?
-   - Quem decide para onde o paciente vai e quem o chama?
 3. Quem atribui o fator de risco e qual escala é usada? (RF15)
+   **Parcialmente respondida.** O risco é atribuído na triagem, por um profissional na sala anexa à recepção, e aparece em pulseira colorida. Vimos verde e amarelo. A escala completa e a categoria profissional são premissas (P1, P4).
 4. Qual critério de prioridade a unidade usa e como combina risco clínico com
    prioridade legal? (RF04, RF14)
+   **Não respondida.** Só há a impressão "um pouco de tudo" (risco, prioridade, chegada). A unidade lista como prioritários idosos, criança de colo, pessoa com deficiência e gestante. Premissa P3.
 5. Como estimar o tempo de espera sem histórico? (RF13, RF24)
-   Caminho escolhido: opção C (faixa de tempo; valor inicial fixo por tipo de
-   atendimento e depois média real medida pelo app), a partir do que for
-   coletado na visita. A visita deve levantar:
-   - quanto dura, em média, cada tipo de atendimento;
-   - se as consultas agendadas atrasam a demanda espontânea e como;
-   - o que a recepção responde hoje a quem pergunta quanto falta.
+   Caminho escolhido: opção C (faixa de tempo; valor inicial por etapa e depois média real medida pelo app).
+   **Visita:** a unidade não informa o tempo restante em nenhuma etapa. Os tempos observados servem só como ordem de grandeza, por causa da amostra pequena: espera até a triagem de 2 a 41 min, triagem de 2 a 6 min, triagem até a consulta de 3 a ~40 min, consulta de ~6 min a mais de 24 min. As consultas agendadas não foram vistas (premissa P6).
 6. Existe distinção entre recepção e profissional de saúde na unidade? (atores)
-   **A levantar na visita de 2026-11-19.**
+   **Respondida pela visita.** Sim. Recepção (cadastro e painel), triagem e consulta são etapas distintas. É o recepcionista quem chama pelo painel.
 7. Como a unidade chama o paciente hoje (senha impressa, nome, número)? Qual é o formato da senha? (RF23)
-   **A levantar na visita de 2026-11-19.**
+   **Respondida pela visita.** **Não há senha.** Chama por nome e consultório, por voz e painel, 3 vezes; sem resposta, é marcada falta e a fila anda. Fora da sala a chamada é muito difícil de ouvir.
 
-Todas dependem da visita à unidade ou de decisão da dupla.
+Sem acesso à unidade, o que resta depende de decisão da dupla, da orientadora ou de uma nova observação, caso a unidade permita.
+
+## Premissas (sem validação com a unidade)
+
+Suposições declaradas que o protótipo usa. Nenhuma foi confirmada pela unidade. Detalhes e fontes de pesquisa (ainda a conferir nos textos originais) em `docs/pesquisa/2026-11-19-visita-upa-sintese.md`, seção "Premissas assumidas".
+
+| # | Premissa | Requisitos afetados | Como o app se protege |
+|---|----------|---------------------|-----------------------|
+| P1 | A escala de risco é a do Protocolo de Manchester, com 5 cores (vermelho, laranja, amarelo, verde, azul). Vimos só verde e amarelo. | RF15 | Escala configurável; nenhuma cor fixa no código. |
+| P2 | Os prazos máximos por cor não são fixos; as fontes divergem. | RF13 | O app não usa prazo por cor na primeira versão. |
+| P3 | A ordem combina risco, prioridade legal e chegada, mas a combinação real é desconhecida. A regra padrão do protótipo é hipótese, a decidir com a orientadora. | RF04, RF14 | Regra de ordenação trocável (`RegraOrdenacao`). |
+| P4 | O profissional da triagem é enfermeiro. | RF15, atores | Os requisitos dizem "profissional da triagem", sem categoria. |
+| P5 | Quem não responde em 3 chamadas é marcado como falta e a fila anda, sem voltar à posição. Intervalo entre as chamadas desconhecido. | RF10, RF17 | Número de chamadas configurável. |
+| P6 | A UPA atende só demanda espontânea, sem consultas agendadas. | RF13 | Consulta agendada fora do escopo. |
+| P7 | A unidade (o "cliente") autoriza o app e a exibição do nome. Quem é, concretamente, fica com a orientadora (issue #19). | RF01, RNF01 | Só dados fictícios; código no lugar do nome. |
+
+Os requisitos RF04, RF10, RF13, RF23 e RF24 e os requisitos novos que a visita sugere (fila em duas etapas, chamada com consultório, falta após 3 chamadas) ainda **não foram reescritos** neste rascunho.
