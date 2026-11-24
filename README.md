@@ -7,8 +7,9 @@ Otimização de Atendimento".
 
 ## Perfis de usuário
 - **Paciente:** faz o check-in e acompanha a fila.
-- **Administrador:** profissional da triagem ou recepção; confirma no
-  sistema cada etapa concluída, o que faz a fila avançar.
+- **Administrador:** quem configura a unidade e as regras do app. Quem
+  confirma cada etapa concluída e faz a fila avançar ainda é desconhecido (a
+  visita não mostrou; ver `docs/requisitos/requisitos.md`).
 
 ## Funcionalidades previstas (backlog inicial)
 1. **Check-in digital:** o paciente registra a chegada pelo app, no lugar
