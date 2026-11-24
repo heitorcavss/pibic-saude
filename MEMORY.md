@@ -11,12 +11,13 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   "Núcleo da fila" abaixo.
 - Concluído: ADR de backend, banco e push aceito (Supabase + FCM).
 - Concluído: visita de campo a uma UPA de urgência em 2026-11-19. Síntese:
-  docs/pesquisa/2026-11-19-visita-upa-sintese.md (PR #21, aceito). Ver
+  docs/pesquisa/2026-11-19-visita-upa-sintese.md (PR #21, mergeado). Ver
   "Unidade visitada" abaixo.
 - Em andamento: confirmar o app em Android.
-- Em andamento: requisitos e modelagem (issue #12, PR #18). Requisitos
-  reescritos com a visita; as premissas P1 a P7 não foram validadas com a
-  unidade.
+- Concluído: requisitos reescritos com a visita (issue #12, PR #18, mergeado);
+  as premissas P1 a P7 não foram validadas com a unidade.
+- Em andamento: modelagem inicial (issue #12, PR #20, em rascunho). Ver
+  "Modelagem" abaixo.
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
 - Sprint 1: check-in digital.
@@ -82,8 +83,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   desenho e aparecem em "Pendências e dúvidas". Cada arquivo traz Status, Fonte
   e "Fora deste diagrama". Ver docs/modelagem/README.md.
 - Existem: arquitetura em componentes e fluxo do check-in à notificação
-  (Estável, vêm dos ADRs aceitos) e estados do paciente (Provisório: a visita à
-  unidade pode mudar o fluxo; revisar depois da análise das visitas).
+  (Estável, vêm dos ADRs aceitos) e estados do paciente (Provisório: baseado
+  em uma visita e sem validação com a unidade).
 - Ainda não existem: casos de uso, classes e sequência (cronograma: jan/2027).
   O escopo do UML depende da resposta da orientadora (issue #13).
 
@@ -112,7 +113,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   fila e da estimativa em SQL no Supabase, e o `fila_core` é Dart puro (o
   app/README.md diz que backend e telas se conectam ao núcleo). Ele roda no
   app, ou serve de modelo para reescrever a regra em SQL? Decidir por ADR
-  "Proposto" antes de ligar o núcleo ao diagrama de componentes.
+  "Proposto" antes de ligar o núcleo ao diagrama de componentes; pode ser o
+  mesmo ADR da fila em duas etapas (RF25).
 - Antes de usar qualquer dataset público, checar licença e LGPD. Links
   levantados: docs/pesquisa/2026-11-17-links-datasets-simulacao-filas.md.
 - Respondidas pela visita (ver requisitos.md): o risco é atribuído na triagem;

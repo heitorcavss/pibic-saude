@@ -18,16 +18,18 @@ Todo arquivo abre com:
 | Status | Significa |
 |---|---|
 | Estável | Vem de ADR aceito ou de código existente. Só muda se o ADR mudar. |
-| Provisório | Vem do projeto oficial, mas depende de a visita à unidade confirmar o fluxo real. Revisar depois da análise das visitas. |
+| Provisório | Vem da visita à unidade (uma tarde, uma UPA) e do projeto oficial, sem validação com a unidade. Revisar se uma nova observação ou a orientadora mudarem o fluxo. |
 
 ## Índice
 
 | Arquivo | O que mostra | Status |
 |---|---|---|
 | [arquitetura-e-fluxo.md](arquitetura-e-fluxo.md) | Peças do sistema e o caminho de um check-in até a notificação | Estável |
-| [estados-do-paciente.md](estados-do-paciente.md) | Por quais situações o paciente passa na fila | Provisório |
+| [estados-do-paciente.md](estados-do-paciente.md) | Por quais situações o paciente passa, da chegada à consulta | Provisório |
 
 ## Ainda não existem
 
-Casos de uso, classes e sequência (cronograma: jan/2027). Eles esperam a análise
-das visitas de campo e a resposta da orientadora sobre o escopo do UML (issue #13).
+Casos de uso, classes e sequência (cronograma: jan/2027). A síntese da visita já
+existe (`docs/pesquisa/2026-11-19-visita-upa-sintese.md`); falta a resposta da
+orientadora sobre o escopo do UML (issue #13) e as decisões que os requisitos
+ainda listam como abertas.
