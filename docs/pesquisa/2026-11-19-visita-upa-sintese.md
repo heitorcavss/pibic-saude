@@ -12,7 +12,7 @@ Dois observadores acompanharam cerca de 1 h 20 min na recepção e na área exte
 
 **O que vimos**
 1. **Fluxo em duas etapas, com fila única e mista.** O paciente passa pelo guichê (cadastro na hora), pela triagem (risco em pulseira, verde e amarelo vistos) e pela consulta. A mesma TV chama as duas etapas.
-2. **Espera longa e desigual.** Até a triagem, de 2 a pelo menos 10 min. Depois da triagem, de 3 a 14 min em quatro casos e pelo menos 36 min em dois pacientes de pulseira verde (B1 e B2; em B2 a chamada não foi vista, e a espera passava de 41 min às 16:41). Nos 9 pacientes acompanhados, a espera mais longa ficou entre a triagem e a consulta.
+2. **Espera longa e desigual.** Até a triagem, de 2 a pelo menos 10 min. Depois da triagem, de 3 a 14 min em três casos e pelo menos 36 min em dois pacientes de pulseira verde (B1 e B2; em B2 a chamada não foi vista, e a espera passava de 41 min às 16:41). Nos 9 pacientes acompanhados, a espera mais longa ficou entre a triagem e a consulta.
 3. **A unidade não informa quanto falta**, em nenhuma etapa.
 4. **Não há senha.** A chamada é pelo nome completo e pelo consultório, por voz e TV. O nome fica exposto, e fora da sala a chamada quase não se ouve. Não vimos quem opera o painel.
 5. **Sem resposta em 3 chamadas, é marcada falta.**
@@ -104,7 +104,7 @@ Impressões registradas (não são fatos):
 1. O paciente vai direto ao único guichê, informa nome ou nascimento ou entrega documento, e descreve o que sente. O cadastro é feito na hora (~2 a 3 min).
 2. O recepcionista coloca o paciente na fila, que aparece no painel.
 3. Espera a triagem, de 2 a pelo menos 10 min nos casos com hora. Um profissional, na única sala, dá a cor do risco com pulseira (3 a 8 min).
-4. Volta a esperar a consulta: de 3 a 14 min em quatro casos e pelo menos 36 min em dois pacientes de pulseira verde. A chamada é por nome e consultório, no painel e por voz. Sem resposta em 3 chamadas, é marcada falta.
+4. Volta a esperar a consulta: de 3 a 14 min em três casos e pelo menos 36 min em dois pacientes de pulseira verde. A chamada é por nome e consultório, no painel e por voz. Sem resposta em 3 chamadas, é marcada falta.
 5. Consulta, de ~6 min a mais de 24 min nos casos vistos, e na maioria das vezes o paciente só vai embora. Em nenhuma etapa a unidade informa quanto falta.
 
 **Isto vale para 19/11/2026, tarde, UPA. Não generalizar.**
