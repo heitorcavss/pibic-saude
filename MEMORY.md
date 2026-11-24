@@ -69,7 +69,7 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   considera. A visita não confirmou o critério real (só "um pouco de tudo?") e
   a unidade lista idosos 60+ como prioritários; ver premissa P3.
 - A unidade tem duas etapas (triagem e consulta) e o núcleo é uma fila só.
-  Precisa evoluir (RF25), por um ADR que ainda não foi escrito.
+  Precisa evoluir (RF25), por um ADR em rascunho (ver "Propostas abertas").
 - Decisões de projeto do algoritmo (ordenar a cada consulta, desempate,
   null versus erro, ausência de desistência etc.) e pendências: seção
   "Decisões de projeto do algoritmo" em app/fila_core/README.md.
@@ -84,8 +84,10 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   (aceito por Miguel em 2026-11-18; issue #5).
 
 ## Propostas abertas
-- ADR da fila em duas etapas (triagem e consulta, RF25): a propor, ainda não
-  escrito.
+- ADR da fila em duas etapas (triagem e consulta, RF25) e do papel do
+  `fila_core` frente ao Supabase (issue #23): rascunho com status Proposto em
+  docs/adr/2026-11-24-fila-em-duas-etapas-e-papel-do-fila-core.md. Nenhuma
+  alternativa foi escolhida; a decisão é da dupla.
 
 ## Pendências e dúvidas
 - Alguém tem conta Apple Developer (paga) para o push no iOS? Sem ela, o push
