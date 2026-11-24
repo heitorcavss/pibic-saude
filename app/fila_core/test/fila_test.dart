@@ -183,7 +183,7 @@ void main() {
     );
 
     test('a fila obedece a regra recebida e não lê chegada nem prioridade', () {
-      // Regra inventada: ordem alfabética do nome. Se a Fila lesse a chegada ou
+      // Regra inventada: ordem alfabética do id. Se a Fila lesse a chegada ou
       // a prioridade por conta própria, este teste falharia.
       final alfabetica = Fila(_RegraAlfabetica());
       alfabetica.entrar(
