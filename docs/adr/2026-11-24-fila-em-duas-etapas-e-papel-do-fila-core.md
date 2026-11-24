@@ -47,6 +47,9 @@ O app calcula a ordem e a posição; o Supabase só guarda e distribui os dados.
 - Fica mais difícil: cada aparelho teria de chegar à mesma ordem. Com vários
   aparelhos mexendo na mesma fila, é preciso um "dono" do estado, e o ADR de
   backend previa a lógica no servidor. Muda uma consequência de um ADR aceito.
+  Além disso, o aviso de "vez próxima" sai do banco (webhook e Edge Function),
+  que não enxerga a ordem calculada no aparelho; a posição teria de estar
+  gravada no servidor.
 
 ### B. A regra mora no banco (SQL); o `fila_core` vira referência
 O Supabase calcula ordem, posição e estimativa (funções e gatilhos). O
@@ -69,7 +72,9 @@ O banco guarda o estado e as etapas do paciente (quem está onde); o Dart
 calcula só a ordenação de uma etapa, recebendo a lista pronta.
 - Fica mais fácil: aproveita o núcleo para o que ele faz bem, a ordem.
 - Fica mais difícil: dois lugares mexem na fila, e o limite entre eles precisa
-  ser desenhado com cuidado para não gerar conflito.
+  ser desenhado com cuidado para não gerar conflito. Como a A, também muda uma
+  consequência do ADR de backend aceito: a ordenação deixaria de ficar só em
+  SQL.
 
 ## Duas etapas: formas de representar
 Independente de A a D:
@@ -87,10 +92,15 @@ aceitos, e a D só vale se a regra por risco (P3) ficar clara. Revisar quando a
 P3 e a pergunta 8 forem resolvidas.
 
 ## Consequências (a preencher depois da decisão)
-Em qualquer caso, atualizar: RF03, RF05, RF10 e RF14 em `requisitos.md`
-(hoje citam operações do Dart), `app/README.md`, a seção "Núcleo da fila" do
-MEMORY.md e as pendências do `fila_core` (issue #24: desistência, falta,
-unicidade do `id`).
+- **B e C** seguem o ADR de backend aceito e não o alteram.
+- **A e D** mudam uma consequência do ADR de backend (a lógica da fila deixa
+  de ficar só em SQL). Isso exige um novo ADR que altere o de backend, aceito
+  por um humano; este rascunho não basta.
+- Em qualquer caso, atualizar: RF03, RF05, RF07, RF09, RF10 e RF14 em
+  `requisitos.md` (hoje citam operações do Dart ou dependem de onde a fila é
+  calculada), `app/README.md`, a seção "Núcleo da fila" do MEMORY.md e as
+  pendências do `fila_core` (issue #24: desistência, falta, unicidade do
+  `id`).
 
 ## Perguntas em aberto
 - Um mesmo `id` pode voltar à fila depois de chamado? (hoje pode; README do
