@@ -70,8 +70,10 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   a unidade lista idosos 60+ como prioritários; ver premissa P3.
 - A unidade tem duas etapas (triagem e consulta) e o núcleo é uma fila só.
   Precisa evoluir (RF25), por um ADR que ainda não foi escrito.
-- Decisões de projeto do algoritmo (ordenar a cada consulta, desempate,
-  null versus erro, ausência de desistência etc.) e pendências: seção
+- Decisões de projeto do algoritmo: seis convenções internas decididas e
+  travadas por testes (ordem calculada na hora, desempate pela ordem de entrada,
+  `null` versus erro, posição a partir de 1, retrato em cópia, a `Fila` só usa o
+  `id`). Seguem em aberto a unicidade do id e a desistência. Detalhes: seção
   "Decisões de projeto do algoritmo" em app/fila_core/README.md.
 - Fora do escopo por enquanto: telas, backend, persistência, notificações,
   classificação de risco, estimativa de tempo de espera.
@@ -98,6 +100,12 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Confirmar o app em Android (emulador ou aparelho): o spike foi só web.
 - Migrar ou não para o pacote material_ui (aviso de obsolescência do
   material.dart no Flutter 3.50).
+- `chamarProximo` tira o paciente da fila na hora da chamada, mas o RF27 prevê
+  3 chamadas sem resposta antes da falta: chamar e iniciar o atendimento são
+  coisas diferentes? Depende da P5 e da pergunta 8.
+- `posicaoDe` devolve `null` para quem está em triagem, em consulta, em falta
+  ou nunca entrou: a `Fila` só enxerga quem espera, e os 5 estados do paciente
+  precisam morar numa camada acima. Propor no ADR do RF25.
 - Antes de usar qualquer dataset público, checar licença e LGPD. Links
   levantados: docs/pesquisa/2026-11-17-links-datasets-simulacao-filas.md.
 - Respondidas pela visita (ver requisitos.md): o risco é atribuído na triagem;
