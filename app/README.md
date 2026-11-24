@@ -16,7 +16,8 @@ para agentes, decisões, requisitos, pesquisa) fica fora dela, na raiz e em
 2. **Núcleo da fila (`fila_core`):** as regras. As telas pedem "chame o
    próximo" e o núcleo responde quem é.
 3. **Backend e banco:** guardam a fila na nuvem e enviam notificações.
-   *Depende de um ADR ainda em aberto.*
+   *Decidido: Supabase + FCM, sem servidor próprio (ver
+   `docs/adr/2026-11-17-backend-banco-push.md`).*
 
 As telas e o backend vão se conectar ao núcleo, em vez de o núcleo depender
 deles. Por isso ele pôde ser feito primeiro.
