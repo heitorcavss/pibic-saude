@@ -84,7 +84,7 @@ do projeto PIBIC).
 | ID | Requisito | Origem |
 |----|-----------|--------|
 | RNF01 | **LGPD**: nenhum dado real de paciente no repositório. O app trata só dados fictícios no protótipo e coleta o mínimo necessário. | AGENTS.md |
-| RNF02 | Deve haver caminho para exclusão dos dados do paciente. | ADR de backend (proposto) |
+| RNF02 | Deve haver caminho para exclusão dos dados do paciente. | ADR de backend (aceito) |
 | RNF03 | Nenhuma credencial ou chave no código; uso de variáveis de ambiente. | AGENTS.md |
 | RNF04 | O protótipo deve usar apenas planos gratuitos. | premissa informada pela dupla |
 | RNF05 | O app deve rodar em Android e iOS (Flutter). | ADR do Flutter |
