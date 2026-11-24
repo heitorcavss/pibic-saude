@@ -155,6 +155,7 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   foi visto.
 - Administrador: quem configura a unidade e as regras. A confirmar quem
   exerce esse papel.
+  Decisão da dupla em 24/11; difere do projeto oficial (Drive, seção 8), que define o administrador como quem confirma cada etapa; a comunicar à orientadora.
 - Fator de risco: grau de prioridade atribuído na triagem, em cor; define a
   ordem na fila de atendimento (HIPÓTESE, P3).
 - Falta: paciente que não responde a 3 chamadas. Que a fila ande sem ele é

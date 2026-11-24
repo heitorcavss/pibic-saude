@@ -30,7 +30,8 @@ do projeto PIBIC).
 | Recepção | Quem recebe o paciente no guichê e faz o cadastro (visita). Quem opera o painel e avança a fila (recepção, triagem ou médico) não foi visto, então fica a confirmar (pergunta 8). É distinta do profissional de saúde. |
 | Profissional da triagem | Quem classifica o risco na sala de triagem, anexa à recepção (visita). A categoria profissional é premissa (P4). |
 | Profissional de saúde | Quem atende na consulta (cerca de 3 consultórios na unidade visitada). |
-| Administrador | Quem configura a unidade (consultórios, regras). **A confirmar** quem exerce esse papel. |
+| Equipe da unidade | Quem avança a fila na unidade (confirma cada etapa concluída). **A confirmar** quem é: recepção, triagem ou médico (pergunta 8). |
+| Administrador | Quem configura a unidade (consultórios, regras). **A confirmar** quem exerce esse papel. Decisão da dupla em 24/11; difere do projeto oficial (Drive, seção 8), que define o administrador como quem confirma cada etapa; a comunicar à orientadora. |
 
 ## Sprint 1 — Check-in digital
 
