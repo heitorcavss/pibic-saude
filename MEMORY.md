@@ -11,12 +11,13 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   "Núcleo da fila" abaixo.
 - Concluído: ADR de backend, banco e push aceito (Supabase + FCM).
 - Concluído: visita de campo a uma UPA de urgência em 2026-11-19. Síntese:
-  docs/pesquisa/2026-11-19-visita-upa-sintese.md (PR #21, aceito). Ver
+  docs/pesquisa/2026-11-19-visita-upa-sintese.md (PR #21, mergeado). Ver
   "Unidade visitada" abaixo.
 - Em andamento: confirmar o app em Android.
-- Em andamento: requisitos e modelagem (issue #12, PR #18). Requisitos
-  reescritos com a visita; as premissas P1 a P7 não foram validadas com a
-  unidade.
+- Concluído: requisitos reescritos com a visita (issue #12, PR #18, mergeado);
+  as premissas P1 a P7 não foram validadas com a unidade.
+- Em andamento: modelagem inicial (issue #12, PR #20, em rascunho). Ver
+  "Modelagem" abaixo.
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
 - Sprint 1: check-in digital.
@@ -79,6 +80,16 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   classificação de risco, estimativa de tempo de espera.
 - Testes: `cd app/fila_core && dart test`.
 
+## Modelagem (docs/modelagem)
+- Regra: só entra nos diagramas o que já está decidido. Dúvidas ficam fora do
+  desenho e aparecem em "Pendências e dúvidas". Cada arquivo traz Status, Fonte
+  e "Fora deste diagrama". Ver docs/modelagem/README.md.
+- Existem: arquitetura em componentes e fluxo do check-in à notificação
+  (Estável, vêm dos ADRs aceitos) e estados do paciente (Provisório: baseado
+  em uma visita e sem validação com a unidade).
+- Ainda não existem: casos de uso, classes e sequência (cronograma: jan/2027).
+  O escopo do UML depende da resposta da orientadora (issue #13).
+
 ## Decisões vigentes (ADRs aceitos)
 - Flutter (Dart) como plataforma mobile: docs/adr/2026-11-16-escolha-do-flutter.md.
 - Backend, banco e push: Supabase (Postgres, Auth, Realtime, RLS) + FCM, sem
@@ -106,6 +117,12 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - `posicaoDe` devolve `null` para quem está em triagem, em consulta, em falta
   ou nunca entrou: a `Fila` só enxerga quem espera, e os 5 estados do paciente
   precisam morar numa camada acima. Propor no ADR do RF25.
+- Qual o papel do `fila_core` frente ao ADR de backend? O ADR põe a lógica da
+  fila e da estimativa em SQL no Supabase, e o `fila_core` é Dart puro (o
+  app/README.md diz que backend e telas se conectam ao núcleo). Ele roda no
+  app, ou serve de modelo para reescrever a regra em SQL? Decidir por ADR
+  "Proposto" antes de ligar o núcleo ao diagrama de componentes; pode ser o
+  mesmo ADR da fila em duas etapas (RF25).
 - Antes de usar qualquer dataset público, checar licença e LGPD. Links
   levantados: docs/pesquisa/2026-11-17-links-datasets-simulacao-filas.md.
 - Respondidas pela visita (ver requisitos.md): o risco é atribuído na triagem;
@@ -146,6 +163,7 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   foi visto.
 - Administrador: quem configura a unidade e as regras. A confirmar quem
   exerce esse papel.
+  Decisão da dupla em 24/11; difere do projeto oficial (seção 8), a comunicar à orientadora.
 - Fator de risco: grau de prioridade atribuído na triagem, em cor; define a
   ordem na fila de atendimento (HIPÓTESE, P3).
 - Falta: paciente que não responde a 3 chamadas. Que a fila ande sem ele é

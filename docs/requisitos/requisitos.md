@@ -31,6 +31,9 @@ do projeto PIBIC).
 | Profissional da triagem | Quem classifica o risco na sala de triagem, anexa à recepção (visita). A categoria profissional é premissa (P4). |
 | Profissional de saúde | Quem atende na consulta (cerca de 3 consultórios na unidade visitada). |
 | Administrador | Quem configura a unidade (consultórios, regras). **A confirmar** quem exerce esse papel. |
+| Equipe da unidade | Quem avança a fila na unidade (confirma cada etapa concluída). Quem exerce esse papel é desconhecido; a confirmar (pergunta 8). |
+
+Nota: nesta documentação, Administrador é quem configura a unidade e as regras (decisão da dupla em 24/11/2026). O projeto oficial (seção 8) define o administrador como o profissional da triagem ou recepção que confirma cada etapa; a diferença deve ser comunicada à orientadora.
 
 ## Sprint 1 — Check-in digital
 
@@ -45,7 +48,7 @@ do projeto PIBIC).
 | RF07 | Na primeira versão a fila é única, e o consultório só aparece na chamada (RF26). O check-in não escolhe tipo de atendimento nem sala. Corresponde à opção A das perguntas em aberto; a escolha final é da dupla. | visita; a decidir pela dupla |
 | RF23 | Ao entrar na fila, o paciente deve receber um código de atendimento anônimo (por exemplo, um número sequencial do dia), usado no lugar do nome para ser chamado. A unidade não usa senha hoje e chama por nome na TV. O núcleo da fila ainda não gera código. O ID segue a ordem de criação, não a de sprint. | visita (não há senha; nome na TV); proposta nossa, muda o que a unidade faz hoje |
 | RF08 | Deve ser possível validar que o paciente está de fato na unidade (por exemplo, QR code no local ou geolocalização). | hipótese |
-| RF25 | A fila tem duas etapas: aguardando triagem e aguardando consulta. O paciente passa para a segunda quando sai da triagem. A unidade visitada tem 1 sala de triagem e cerca de 3 consultórios, e a mesma chamada serve às duas etapas. O núcleo da fila hoje é uma fila só e precisa evoluir (ADR a propor; ver o modelo de estados do PR #20). O ID segue a ordem de criação. | visita |
+| RF25 | A fila tem duas etapas: aguardando triagem e aguardando consulta. O paciente passa para a segunda quando sai da triagem. A unidade visitada tem 1 sala de triagem e cerca de 3 consultórios, e a mesma chamada serve às duas etapas. O núcleo da fila hoje é uma fila só e precisa evoluir (ADR em rascunho em `docs/adr/2026-11-24-fila-em-duas-etapas-e-papel-do-fila-core.md`; ver `docs/modelagem/estados-do-paciente.md`). O ID segue a ordem de criação. | visita |
 
 ## Sprint 2 — Monitoramento da fila de espera
 
