@@ -65,35 +65,43 @@ leis em qualquer relatório, confira o texto atual no site do Planalto.
 
 ## Decisões de projeto do algoritmo
 
-Escolhas feitas ao escrever a `Fila`. Todas são **discutíveis**: vale revisá-las
-quando houver dados reais ou necessidade nova. Quando uma for decidida de vez e
+Escolhas feitas ao escrever a `Fila`. Os pontos 1, 2, 3, 4, 6 e 7 são
+**convenções internas**: não dependem de nenhuma regra da unidade de saúde e já
+estão decididos e travados por testes (grupo "Convenções da Fila"). Os pontos 5
+e 8 continuam em aberto porque dependem de decisões do projeto. Se uma decisão
 tiver impacto no restante do app, vira ADR.
 
-1. **Ordenar a cada consulta ou manter a lista ordenada.**
-   - Hoje o código copia e ordena a lista em toda chamada de `chamarProximo`,
-     `posicaoDe` e `pacientesEmOrdem`.
-   - Vantagem: simples e sem risco de a lista ficar fora de ordem.
-   - Custo: trabalho repetido, e o `indexOf` do desempate percorre a lista a
-     cada empate.
-   - Não há medição no projeto, então não se sabe se isso pesa para o tamanho
-     real da fila. A alternativa é inserir já na posição certa.
-2. **Empate resolvido pela ordem de entrada na fila**, e não por outro critério.
-   A ordem de entrada não é a hora de chegada: um paciente pode entrar depois
-   com chegada anterior (o teste "ordem de chegada sem prioridade" usa isso).
-3. **Ausência vira `null`** em fila vazia (`chamarProximo`) e em id desconhecido
-   (`posicaoDe`), mas **id repetido lança erro**. O código mistura os dois
-   estilos. O comentário só justifica o erro do id; a escolha do `null` não tem
-   justificativa escrita.
-4. **A posição começa em 1**, enquanto os índices da lista começam em 0.
-5. **A unicidade do id só vale entre quem espera.** Quem já foi chamado saiu da
-   lista, então o mesmo id pode entrar de novo. É consequência do código; o
-   comentário não discute.
-6. **Cópia defensiva** em `pacientesEmOrdem`: quem recebe a lista não consegue
-   bagunçar a fila por dentro.
-7. **A `Fila` só usa o `id` do paciente.** `chegada` e `prioridade` ficam
-   inteiramente com a regra de ordenação.
-8. **Não existe método para tirar alguém sem chamá-lo** (por exemplo, uma
-   desistência). É uma ausência no código, e não uma decisão registrada.
+1. **Ordem calculada na hora, não mantida na lista. (Decidido)**
+   - A lista guarda a ordem de entrada; a ordem de atendimento é calculada a
+     cada consulta. Continua certa se uma regra futura depender do tempo.
+   - Medição única, na máquina de desenvolvimento (Dart 3.14, 2000 pessoas,
+     regra de prioridade legal): esvaziar a fila com `chamarProximo` levou
+     cerca de 520 ms antes e 26 ms depois, porque `chamarProximo` agora acha o
+     primeiro numa passada, sem ordenar tudo, e o desempate deixou de usar
+     `indexOf`. Uma consulta de `posicaoDe` ficou em cerca de 1 ms nas duas
+     versões. Para as dezenas de pessoas de uma fila real, a diferença não
+     aparece. Números de uma execução só, apenas como ordem de grandeza.
+2. **Desempate pela ordem de entrada. (Decidido)** Cada entrada recebe um
+   número crescente que nunca se repete, e ele só decide quando a regra empata.
+   A ordem de entrada não é a hora de chegada: quem entra depois com chegada
+   anterior passa na frente. Critérios da unidade pertencem à regra, não à fila.
+3. **Ausência esperada devolve `null`; contrato violado lança erro. (Decidido)**
+   Fila vazia e id desconhecido são situações normais (`null`). Id repetido é
+   erro de quem chama (`ArgumentError`). A justificativa está na documentação da
+   classe `Fila`.
+4. **A posição começa em 1. (Decidido)** É como o paciente lê na tela; os índices
+   da lista (0) não vazam para fora.
+5. **A unicidade do id só vale entre quem espera. (EM ABERTO)** É consequência do
+   código: quem já foi chamado pode entrar de novo com o mesmo id (há um teste
+   que registra isso). Depende de o que é o `id` (senha do dia ou pessoa), ou
+   seja, de RF23, RF01 e RF07.
+6. **`pacientesEmOrdem` é um retrato em cópia. (Decidido)** Quem recebe pode
+   mexer sem bagunçar a fila, e a lista não acompanha o que acontece depois.
+   Copiar a lista basta porque `Paciente` é imutável.
+7. **A `Fila` só usa o `id` do paciente. (Decidido)** `chegada` e `prioridade`
+   ficam inteiramente com a regra; um teste usa uma regra que ignora os dois.
+8. **Não existe método para tirar alguém sem chamá-lo. (EM ABERTO)** Falta a
+   operação de desistência (RF12). Nenhuma decisão foi tomada ainda.
 
 ## Fora do escopo desta versão
 
