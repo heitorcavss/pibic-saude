@@ -38,9 +38,10 @@ unidade, com ou sem o app.
 
 ## Relação com o código
 
-Cada etapa de espera é uma `Fila` com uma `RegraOrdenacao` (padrão Strategy, em
-`app/fila_core`). Hoje o núcleo é uma fila só, e a regra por risco não existe;
-a evolução para duas etapas é o RF25, que depende de um ADR ainda não escrito.
+A ligação entre estes estados e o `fila_core` está **em aberto**. Hoje o núcleo
+é uma fila só, e a regra por risco não existe. Como ele evolui para duas etapas
+(RF25) e qual é o seu papel frente ao ADR de backend estão em rascunho em
+`docs/adr/2026-11-24-fila-em-duas-etapas-e-papel-do-fila-core.md` (issue #23).
 
 ## Fora deste diagrama (de propósito)
 

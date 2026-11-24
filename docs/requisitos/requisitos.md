@@ -45,7 +45,7 @@ do projeto PIBIC).
 | RF07 | Na primeira versão a fila é única, e o consultório só aparece na chamada (RF26). O check-in não escolhe tipo de atendimento nem sala. Corresponde à opção A das perguntas em aberto; a escolha final é da dupla. | visita; a decidir pela dupla |
 | RF23 | Ao entrar na fila, o paciente deve receber um código de atendimento anônimo (por exemplo, um número sequencial do dia), usado no lugar do nome para ser chamado. A unidade não usa senha hoje e chama por nome na TV. O núcleo da fila ainda não gera código. O ID segue a ordem de criação, não a de sprint. | visita (não há senha; nome na TV); proposta nossa, muda o que a unidade faz hoje |
 | RF08 | Deve ser possível validar que o paciente está de fato na unidade (por exemplo, QR code no local ou geolocalização). | hipótese |
-| RF25 | A fila tem duas etapas: aguardando triagem e aguardando consulta. O paciente passa para a segunda quando sai da triagem. A unidade visitada tem 1 sala de triagem e cerca de 3 consultórios, e a mesma chamada serve às duas etapas. O núcleo da fila hoje é uma fila só e precisa evoluir (ADR a propor; ver `docs/modelagem/estados-do-paciente.md`). O ID segue a ordem de criação. | visita |
+| RF25 | A fila tem duas etapas: aguardando triagem e aguardando consulta. O paciente passa para a segunda quando sai da triagem. A unidade visitada tem 1 sala de triagem e cerca de 3 consultórios, e a mesma chamada serve às duas etapas. O núcleo da fila hoje é uma fila só e precisa evoluir (ADR em rascunho em `docs/adr/2026-11-24-fila-em-duas-etapas-e-papel-do-fila-core.md`; ver `docs/modelagem/estados-do-paciente.md`). O ID segue a ordem de criação. | visita |
 
 ## Sprint 2 — Monitoramento da fila de espera
 
