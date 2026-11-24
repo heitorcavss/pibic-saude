@@ -99,6 +99,10 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 ## Propostas abertas
 - ADR da fila em duas etapas (triagem e consulta, RF25): a propor, ainda não
   escrito.
+- ADR "Servidor em Dart para a lógica da fila" (Proposto, rascunho): lógica da
+  fila em servidor Dart próprio (Render, com possível troca para Cloud Run),
+  banco, login, RLS e push no Supabase e FCM. Se aceito, altera uma
+  consequência do ADR de backend aceito. Ver docs/adr/2026-11-24-servidor-dart-para-a-logica-da-fila.md.
 
 ## Pendências e dúvidas
 - Alguém tem conta Apple Developer (paga) para o push no iOS? Sem ela, o push
