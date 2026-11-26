@@ -18,6 +18,10 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   as premissas P1 a P7 não foram validadas com a unidade.
 - Em andamento: modelagem inicial (issue #12, PR #20, em rascunho). Ver
   "Modelagem" abaixo.
+- Em andamento: resumos do projeto para os orientadores, em rascunho (um de
+  gestão e um técnico): docs/pesquisa/2026-11-26-resumo-orientacao-gestao.md e
+  docs/pesquisa/2026-11-26-resumo-orientacao-tecnico.md. Ainda precisam de
+  revisão da dupla.
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
 - Sprint 1: check-in digital.
