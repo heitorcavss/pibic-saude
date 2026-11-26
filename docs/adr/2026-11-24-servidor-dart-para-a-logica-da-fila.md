@@ -6,8 +6,9 @@ Autor: Heitor (rascunho com apoio do Claude)   Aprovado por: —
 > Rascunho para a dupla discutir. Só um humano muda o status para Aceito
 > (AGENTS.md). **Se aceito, altera uma consequência do ADR de backend
 > aceito** (`2026-11-17-backend-banco-push.md`: "não há servidor para manter;
-> a lógica da fila fica em SQL"). Relacionado: issue #23 e o rascunho do ADR da
-> fila em duas etapas (PR #26), que lista as alternativas A a D. Esta é a E.
+> a lógica da fila fica em SQL"). Relacionado: issue #23. Este ADR trata só da
+> arquitetura (onde roda o código da fila); o PR #26 trata de como representar
+> as duas etapas e os estados do paciente.
 > Os números de planos gratuitos vêm de buscas feitas em 2026-11-24 e **devem
 > ser reconferidos nas páginas oficiais** antes de aceitar.
 
@@ -44,18 +45,61 @@ custo zero do ADR de backend. **Possível mudança para o Google Cloud Run**, se
 a espera do Render atrapalhar (ver Consequências).
 
 ## Alternativas consideradas
-- **Tudo no Supabase, regra em SQL (alternativa B do PR #26):** segue o ADR
-  aceito e não exige hospedar nada. Menos autoral: o `fila_core` vira só
-  referência e a regra é reescrita em SQL.
-- **`fila_core` no app (alternativa A do PR #26):** descartada para a ordem da
-  fila, porque o celular do paciente não pode decidir a ordem (burla e
-  conflito entre aparelhos).
+Todas respondem a mesma pergunta: **onde roda o código que decide a ordem da
+fila?** As alternativas A a D vieram do rascunho do PR #26 (issue #23) e foram
+trazidas para cá, porque esta é uma decisão de arquitetura.
+
+### A. O `fila_core` roda no app
+O app calcula a ordem e a posição; o Supabase só guarda e distribui os dados.
+- Mais fácil: reaproveita o que existe e tem testes; a regra é testada sem
+  banco (RNF08).
+- Mais difícil: cada aparelho teria de chegar à mesma ordem, e com vários
+  aparelhos mexendo na mesma fila falta um "dono" do estado. O aviso de "vez
+  próxima" sai do banco (webhook e Edge Function), que não enxerga a ordem
+  calculada no aparelho. Muda uma consequência do ADR de backend aceito.
+- O celular do paciente não pode decidir a ordem (burla e conflito entre
+  aparelhos).
+
+### B. A regra mora no banco (SQL); o `fila_core` vira referência
+O Supabase calcula ordem, posição e estimativa (funções e gatilhos). O
+`fila_core` fica como protótipo executável e como especificação dos testes que
+a versão em SQL deve cumprir.
+- Mais fácil: segue o ADR aceito sem mudar nada; um só lugar decide a ordem; o
+  push já nasce do banco; não exige hospedar nada.
+- Mais difícil: a regra existe em duas linguagens, e é preciso mantê-las
+  coerentes (por exemplo, com os mesmos casos de teste nas duas). Trocar a
+  regra exige mexer no SQL. Menos autoral.
+
+### C. Descartar o `fila_core`
+Escrever tudo em SQL e apagar o pacote.
+- Mais fácil: uma só implementação.
+- Mais difícil: joga fora o trabalho feito e o material de estudo (testes e
+  decisões de projeto), sem ganho claro agora.
+
+### D. Dividir a responsabilidade
+O banco guarda o estado e as etapas do paciente (quem está onde); o Dart
+calcula só a ordenação de uma etapa, recebendo a lista pronta.
+- Mais fácil: aproveita o núcleo no que ele faz bem, a ordem.
+- Mais difícil: dois lugares mexem na fila, e o limite entre eles precisa ser
+  desenhado com cuidado. Como a A, muda uma consequência do ADR de backend
+  aceito.
+
+### E. Servidor Dart próprio (esta proposta)
+O `fila_core` roda num servidor nosso, e o Supabase fica com banco, login,
+RLS, tempo real e push (ver Decisão).
+- Mais fácil: regra autoral em Dart e testável sem banco; uma linguagem só nos
+  dois lados; ordem decidida num lugar só, fora do celular.
+- Mais difícil: hospedagem, chave de administrador e validação do login (ver
+  Consequências).
+
+### Variações descartadas ou em segundo plano
 - **Regra em TypeScript numa Edge Function:** fica dentro do Supabase, mas
   reescreve o `fila_core` em outra linguagem.
-- **Cloud Run desde o início:** melhor tecnicamente (sem a espera do Render),
-  mas exige conta de cobrança com cartão, o que fere "sem verba". Fica como
-  opção de troca.
-- **Fly.io:** sem plano grátis permanente para contas novas (fontes de 2026).
+- **E com Cloud Run desde o início:** melhor tecnicamente (sem a espera do
+  Render), mas exige conta de cobrança com cartão, o que fere "sem verba".
+  Fica como opção de troca.
+- **E com Fly.io:** sem plano grátis permanente para contas novas (fontes de
+  2026).
 
 ## Consequências
 **Fica mais fácil:** a regra de ordem em Dart, testável sem banco (RNF08) e
@@ -91,6 +135,11 @@ reaproveitando o `fila_core`; uma linguagem só nos dois lados.
   MEMORY.md, e os RF que citam onde a fila é calculada (ver PR #26).
 - O AGENTS.md hoje diz "sem servidor próprio nesta fase": só um humano muda
   essa regra.
+- Qualquer que seja a alternativa escolhida (A a E), atualizar os RF que citam
+  operações do Dart ou dependem de onde a fila é calculada (RF03, RF05, RF07,
+  RF09, RF10 e RF14 em `requisitos.md`) e o `app/README.md`.
+- As alternativas A, D e E mudam uma consequência do ADR de backend aceito
+  (a lógica da fila deixa de ficar só em SQL); B e C não o alteram.
 
 ## Perguntas em aberto
 - O Miguel aceita o servidor próprio e a hospedagem no Render (ou no Cloud
@@ -99,5 +148,7 @@ reaproveitando o `fila_core`; uma linguagem só nos dois lados.
 - O Supabase aceita chamar o servidor externo (webhook ou chamada do app)? O
   desenho assume que sim; **não foi verificado na documentação**.
 - A espera de cerca de 1 min do Render é aceitável para as demonstrações?
-- Mesmas dúvidas do rascunho do PR #26 (id que volta à fila, 3 chamadas antes
-  da falta, estimativa junto da ordem ou separada).
+- As perguntas sobre o comportamento da fila (o `id` que volta à fila, as 3
+  chamadas antes da falta, a estimativa junto da ordem ou separada) e como
+  representar as duas etapas e os estados do paciente ficam no PR #26, e não
+  mudam com esta decisão.
