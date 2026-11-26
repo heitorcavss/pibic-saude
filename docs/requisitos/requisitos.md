@@ -41,9 +41,9 @@ Nota: nesta documentação, Administrador é quem configura a unidade e as regra
 |----|-----------|--------|
 | RF01 | O paciente deve conseguir se identificar no app (cadastro e login), com o mínimo de dados necessário. Opções, em ordem de preferência: (1) login gov.br (OAuth/OpenID Connect; entrega o CPF, que é dado pessoal, e exige cadastro do sistema junto ao governo, a confirmar com o IFG ou a orientadora, issue #19; roteiro oficial: https://roteiro-tecnico.acesso.gov.br/); (2) cadastro simples próprio, com nome, senha e idade, só com dados fictícios, já que o app não será lançado; (3) login anônimo com código de atendimento. | cronograma; forma de identificação a confirmar; visita: no guichê a unidade pede nome ou nascimento, ou documento, e o que o paciente sente |
 | RF02 | O paciente deve conseguir fazer o check-in ao chegar à unidade. | cronograma |
-| RF03 | O check-in deve inserir o paciente na fila, na etapa "aguardando triagem" (RF25), pela operação `Fila.entrar`. | código; visita |
+| RF03 | O check-in deve inserir o paciente na fila, na etapa "aguardando triagem" (RF25), pela operação `Fila.entrar`, que roda no servidor Dart (ADR `2026-11-24-servidor-dart-para-a-logica-da-fila`). | código; visita; ADR do servidor Dart |
 | RF04 | O paciente deve poder informar condição que dá prioridade legal: idoso (60+), gestante, lactante, pessoa com criança de colo, pessoa com deficiência, pessoa com transtorno do espectro autista, obeso, pessoa com mobilidade reduzida e doador de sangue (este por último), conforme a Lei 10.048/2000. A unidade lista só algumas (idosos, criança de colo, pessoa com deficiência e gestante), e não vimos como a prioridade é aplicada. Entre os idosos, os 80+ têm preferência especial, exceto em caso de emergência (Estatuto da Pessoa Idosa, art. 15, §7º). O núcleo (`RegraPrioridadeLegal`) hoje coloca 80+ antes das demais e precisa ser revisto. Como a prioridade legal se combina com o risco é a premissa P3. | visita (lista de prioridades); premissa P3; hipótese (ver `RegraPrioridadeLegal`) |
-| RF05 | Após o check-in, o app deve mostrar ao paciente a confirmação, a etapa em que está (aguardando triagem ou aguardando consulta) e a posição atual na fila (`Fila.posicaoDe`). | código; visita |
+| RF05 | Após o check-in, o app deve mostrar ao paciente a confirmação, a etapa em que está (aguardando triagem ou aguardando consulta) e a posição atual na fila (`Fila.posicaoDe`, calculada no servidor Dart). | código; visita; ADR do servidor Dart |
 | RF06 | A recepção deve poder ver quem fez check-in pelo app, além dos pacientes cadastrados no guichê. | hipótese; visita: hoje a recepção cadastra no guichê |
 | RF07 | Na primeira versão a fila é única, e o consultório só aparece na chamada (RF26). O check-in não escolhe tipo de atendimento nem sala. Corresponde à opção A das perguntas em aberto; a escolha final é da dupla. | visita; a decidir pela dupla |
 | RF23 | Ao entrar na fila, o paciente deve receber um código de atendimento anônimo (por exemplo, um número sequencial do dia), usado no lugar do nome para ser chamado. A unidade não usa senha hoje e chama por nome na TV. O núcleo da fila ainda não gera código. O ID segue a ordem de criação, não a de sprint. | visita (não há senha; nome na TV); proposta nossa, muda o que a unidade faz hoje |
@@ -54,13 +54,13 @@ Nota: nesta documentação, Administrador é quem configura a unidade e as regra
 
 | ID | Requisito | Origem |
 |----|-----------|--------|
-| RF09 | O paciente deve ver a própria posição e o tamanho da fila, atualizados sem recarregar a tela. | código (`posicaoDe`, `tamanho`); atualização em tempo real depende do ADR de backend |
-| RF10 | Deve ser possível chamar o próximo paciente (`Fila.chamarProximo`). Na unidade vimos a chamada por voz e painel, mas não quem opera o painel (recepção, triagem ou médico). No app, a recepção chama até haver resposta. Quando a chamada é para a consulta, informa o consultório (RF26). | código; visita; a confirmar (pergunta 8) |
-| RF11 | A recepção deve ver a fila completa, na ordem definida pela regra de ordenação ativa. | hipótese |
+| RF09 | O paciente deve ver a própria posição e o tamanho da fila, atualizados sem recarregar a tela. O servidor Dart calcula a posição e grava; a atualização em tempo real vem do Supabase. | código (`posicaoDe`, `tamanho`); ADR de backend (tempo real); ADR do servidor Dart |
+| RF10 | Deve ser possível chamar o próximo paciente (`Fila.chamarProximo`, que roda no servidor Dart). Na unidade vimos a chamada por voz e painel, mas não quem opera o painel (recepção, triagem ou médico). No app, a equipe da unidade chama até haver resposta; quem exerce esse papel fica a confirmar. Quando a chamada é para a consulta, informa o consultório (RF26). | código; visita; a confirmar (pergunta 8) |
+| RF11 | A equipe da unidade deve ver a fila completa, na ordem definida pela regra de ordenação ativa. | hipótese |
 | RF12 | O paciente deve poder desistir da fila. O núcleo ainda não tem essa operação. | pendência registrada no README do `fila_core` |
 | RF13 | O app deve mostrar uma estimativa de tempo de espera como faixa (por exemplo, 20 a 30 min), não como número exato, calculada por etapa (espera pela triagem e espera pela consulta). A unidade não informa o tempo restante hoje. Os valores iniciais usam a ordem de grandeza da visita, com faixa larga por causa da amostra pequena (espera até a triagem de 2 a pelo menos 10 min, triagem de 3 a 8 min, triagem até a consulta de 3 a mais de 36 min, consulta de ~6 a mais de 24 min). As esperas mais longas foram depois da triagem (dois pacientes de pulseira verde), mas a etapa que limita o fluxo não está confirmada. Depois passa a usar a média real medida pelo app. Sem prazo por cor (P2). | visita; hipótese; premissas P2 e P6; valores a refinar em nova observação |
 | RF24 | O sistema deve registrar o início e o fim de cada etapa (triagem e consulta), para medir a duração real. Na unidade ninguém registra o fim da consulta: o paciente só vai embora. Como o fim será marcado (pela recepção, ou pela chamada seguinte no mesmo consultório) é decisão da dupla com a orientadora. O núcleo da fila só tem `chamarProximo`, sem o "fim". O ID segue a ordem de criação. | visita; hipótese; depende do RF13 |
-| RF14 | A regra de ordenação deve ser trocável sem mudar a fila. | código (`RegraOrdenacao`); premissa P3 |
+| RF14 | A regra de ordenação deve ser trocável sem mudar a fila. A regra roda no servidor Dart. | código (`RegraOrdenacao`); premissa P3; ADR do servidor Dart |
 | RF15 | O app deve guardar o nível de risco do paciente depois da triagem, numa escala configurável (padrão: as 5 cores de Manchester). Na unidade o risco é atribuído na triagem e aparece em pulseira colorida; vimos verde e amarelo. Quem digita o risco no app (triagem ou recepção) é decisão da dupla. | visita; premissas P1 e P4 |
 | RF26 | A chamada deve informar o consultório junto com o código do paciente (por exemplo, "CÓDIGO – CONSULTÓRIO 3"), como a TV da unidade faz com o nome. | visita |
 | RF27 | Quem não responde após 3 chamadas deve ser marcado como falta. Na unidade vimos a falta após 3 chamadas; que a fila ande sem o paciente voltar à posição é suposição (P5). O número de chamadas é configurável. O intervalo entre as chamadas é desconhecido. O núcleo ainda não tem essa operação. O ID segue a ordem de criação. | visita; premissa P5 |
@@ -87,7 +87,7 @@ Nota: nesta documentação, Administrador é quem configura a unidade e as regra
 | ID | Requisito | Origem |
 |----|-----------|--------|
 | RNF01 | **LGPD**: nenhum dado real de paciente no repositório. O app trata só dados fictícios no protótipo e coleta o mínimo necessário. | AGENTS.md |
-| RNF02 | Deve haver caminho para exclusão dos dados do paciente. | ADR de backend (proposto) |
+| RNF02 | Deve haver caminho para exclusão dos dados do paciente. | ADR de backend (aceito) |
 | RNF03 | Nenhuma credencial ou chave no código; uso de variáveis de ambiente. | AGENTS.md |
 | RNF04 | O protótipo deve usar apenas planos gratuitos. | premissa informada pela dupla |
 | RNF05 | O app deve rodar em Android e iOS (Flutter). | ADR do Flutter |
@@ -123,7 +123,7 @@ A visita de 2026-11-19 (UPA de urgência, observação de ~1 h 20 min) respondeu
 7. Como a unidade chama o paciente hoje (senha impressa, nome, número)? Qual é o formato da senha? (RF23)
    **Respondida pela visita.** **Não há senha.** Chama pelo nome completo e pelo consultório, por voz e painel; sem resposta em 3 chamadas, é marcada falta. Se a fila anda sem o paciente é suposição (P5). Fora da sala a chamada é muito difícil de ouvir.
 8. Quem opera o painel e avança a fila: recepção, triagem ou médico? (RF10, atores)
-   **Não respondida.** Não vimos. No app, a recepção chama até haver resposta.
+   **Não respondida.** Não vimos. No app, a equipe da unidade chama até haver resposta; quem exerce esse papel fica a confirmar.
 
 Sem acesso à unidade, o que resta depende de decisão da dupla, da orientadora ou de uma nova observação, caso a unidade permita.
 
