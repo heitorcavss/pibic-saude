@@ -73,8 +73,9 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   Decidido no ADR docs/adr/2026-11-24-etapas-e-estados-do-paciente.md (aceito
   por Miguel em 2026-11-26; issue #23): o estado do paciente fica num registro
   único (uma tabela), com cinco estados, e há uma `Fila` por etapa montada a
-  partir dele: triagem por ordem de chegada e consulta por risco. **As duas
-  regras de ordem são HIPÓTESE (P3).** A regra por risco e a mudança de etapa
+  partir dele: triagem por ordem de chegada e consulta por risco. **A ordem
+  real de cada fila segue em aberto (P3); as duas regras são de trabalho, só
+  para poder testar.** A regra por risco e a mudança de etapa
   ainda não existem no núcleo (RF25).
 - Decisões de projeto do algoritmo: seis convenções internas decididas e
   travadas por testes (ordem calculada na hora, desempate pela ordem de entrada,

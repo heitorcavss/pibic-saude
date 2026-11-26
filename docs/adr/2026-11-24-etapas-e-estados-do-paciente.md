@@ -11,7 +11,8 @@ Autor: Claude (rascunho a pedido de Miguel)   Aprovado por: Miguel (2026-11-26)
 > A decisão foi tomada com o que a visita de 2026-11-19 mostrou. As dúvidas que
 > a visita não resolveu estão no fim e **não mudam a forma de representar as
 > etapas**: cada regra de ordem é trocável (`RegraOrdenacao`). As regras de
-> ordem escolhidas abaixo são **HIPÓTESE**.
+> ordem abaixo são **regra de trabalho, só para poder testar**: a ordem real da
+> unidade segue em aberto, porque a visita não a mostrou.
 
 ## Contexto
 O `app/fila_core` (PR #8) é Dart puro, com a regra de ordem trocável
@@ -42,11 +43,13 @@ As duas ideias se combinam, porque o servidor Dart lê o banco a cada pedido:
   consulta, em consulta e falta.
 - **Há uma `Fila` do `fila_core` por etapa**, montada a partir dos pacientes
   que esperam em cada etapa, cada uma com a sua regra de ordem:
-  - **triagem:** por ordem de chegada (`RegraOrdemDeChegada`);
-  - **consulta:** por risco, com desempate por chegada. A regra por risco ainda
-    não existe no núcleo.
-  - **As duas regras são HIPÓTESE (premissa P3)**, a confirmar com a
-    orientadora ou numa nova observação.
+  - **triagem:** por ordem de chegada (`RegraOrdemDeChegada`), como regra de
+    trabalho;
+  - **consulta:** por risco, com desempate por chegada, como regra de
+    trabalho. A regra por risco ainda não existe no núcleo.
+  - **Nenhuma das duas está confirmada (premissa P3):** a visita não mostrou a
+    ordem real, que segue em aberto. Servem só para poder testar e devem ser
+    confirmadas com a orientadora ou numa nova observação.
 - A `Fila` continua só enxergando quem espera. "Em triagem", "em consulta" e
   "falta" ficam no registro, fora da `Fila`. Passar de etapa é mudar o estado
   no registro: o paciente sai de uma `Fila` e aparece na outra na próxima
