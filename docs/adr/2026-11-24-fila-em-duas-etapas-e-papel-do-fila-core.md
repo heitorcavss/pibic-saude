@@ -6,6 +6,10 @@ Autor: Claude (rascunho a pedido de Miguel)   Aprovado por: —
 > Rascunho para a dupla discutir. Ele **não escolhe** por vocês: lista as
 > alternativas, o que cada uma custa e o que ainda falta saber. Só um humano
 > muda o status para Aceito (AGENTS.md). Issue: #23.
+>
+> **Veja também o PR #27:** propõe uma alternativa E para "onde mora a lógica
+> da fila", um servidor Dart próprio rodando o `fila_core`. Ela responde só à
+> primeira pergunta abaixo; a segunda (as duas etapas) continua aqui.
 
 ## Contexto
 Duas decisões já tomadas puxam em direções diferentes:
