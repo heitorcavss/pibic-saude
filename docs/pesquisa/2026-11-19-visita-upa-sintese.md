@@ -12,7 +12,7 @@ Dois observadores acompanharam cerca de 1 h 20 min na recepção e na área exte
 
 **O que vimos**
 1. **Fluxo em duas etapas, com fila única e mista.** O paciente passa pelo guichê (cadastro na hora), pela triagem (risco em pulseira, verde e amarelo vistos) e pela consulta. A mesma TV chama as duas etapas.
-2. **Espera longa e desigual.** Até a triagem, de 2 a pelo menos 10 min. Depois da triagem, de 3 a 14 min em três casos e pelo menos 36 min em dois pacientes de pulseira verde (B1 e B2; em B2 a chamada não foi vista, e a espera passava de 41 min às 16:41). Nos 9 pacientes acompanhados, a espera mais longa ficou entre a triagem e a consulta.
+2. **Espera longa e desigual.** Até a triagem, de 2 a pelo menos 10 min. Depois da triagem, de 3 a 14 min em quatro casos e pelo menos 36 min em dois pacientes de pulseira verde (B1 e B2; em B2 a chamada não foi vista, e a espera passava de 41 min às 16:41). Nos 9 pacientes acompanhados, a espera mais longa ficou entre a triagem e a consulta.
 3. **A unidade não informa quanto falta**, em nenhuma etapa.
 4. **Não há senha.** A chamada é pelo nome completo e pelo consultório, por voz e TV. O nome fica exposto, e fora da sala a chamada quase não se ouve. Não vimos quem opera o painel.
 5. **Sem resposta em 3 chamadas, é marcada falta.**
@@ -61,8 +61,8 @@ Fatos anotados, em ordem por código. A cor de risco só é conhecida depois da 
 | A2 | Amarelo. Foi à triagem às 16:24 e voltou às 16:27 (~3 min). Foi embora às 17:15. |
 | A3 | Registrado às 16:48 esperando na recepção, com o recepcionista fora do guichê. Foi à triagem às 16:58. |
 | A4 e A5 | Dois pacientes verdes entraram na consulta às 16:48 e 16:49. Um saiu às 16:55 (cerca de 6 min de consulta). |
-| A6 | Idosa. Recepção às 17:09, triagem às 17:11, saída da triagem às 17:15 e consulta às 17:26. |
-| B1 | Pulseira verde. Observada na triagem a partir do registro das 16:19: triagem de 7 a 8 min, e pacientes reclamaram de como demorou. Às 16:55 já somava 36 min de espera (contados a partir das 16:19). Chamada à consulta às 17:03. |
+| A6 | Idosa com problema de coluna. Recepção às 17:09, triagem às 17:11, saída da triagem às 17:15 e consulta às 17:26. |
+| B1 | Pulseira verde. Observada na triagem a partir do registro das 16:19: triagem de 7 a 8 min, e pacientes reclamaram de como demorou. Às 16:55 esperava havia 36 min depois da triagem. Chamada à consulta às 17:03. |
 | B2 e B3 | B2, paciente de pulseira verde, e B3, o acompanhante. Já estavam na espera pós-triagem quando a observação começou. Segundo a anotação de B, às 16:41 somavam 41 min de espera pela consulta (29 min na primeira anotação e mais 12 min até 16:41); o tempo real é maior, porque já estavam esperando quando os observadores chegaram. A chamada à consulta não foi vista. |
 | B4 | Chegou às 16:57, triagem às 17:03 e 17:08, consulta às 17:11. Quando os observadores foram embora, às 17:35, ele ainda não tinha voltado da consulta. |
 
@@ -104,7 +104,7 @@ Impressões registradas (não são fatos):
 1. O paciente vai direto ao único guichê, informa nome ou nascimento ou entrega documento, e descreve o que sente. O cadastro é feito na hora (~2 a 3 min).
 2. O recepcionista coloca o paciente na fila, que aparece no painel.
 3. Espera a triagem, de 2 a pelo menos 10 min nos casos com hora. Um profissional, na única sala, dá a cor do risco com pulseira (3 a 8 min).
-4. Volta a esperar a consulta: de 3 a 14 min em três casos e pelo menos 36 min em dois pacientes de pulseira verde. A chamada é por nome e consultório, no painel e por voz. Sem resposta em 3 chamadas, é marcada falta.
+4. Volta a esperar a consulta: de 3 a 14 min em quatro casos e pelo menos 36 min em dois pacientes de pulseira verde. A chamada é por nome e consultório, no painel e por voz. Sem resposta em 3 chamadas, é marcada falta.
 5. Consulta, de ~6 min a mais de 24 min nos casos vistos, e na maioria das vezes o paciente só vai embora. Em nenhuma etapa a unidade informa quanto falta.
 
 **Isto vale para 19/11/2026, tarde, UPA. Não generalizar.**

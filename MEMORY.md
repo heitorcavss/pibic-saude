@@ -70,7 +70,12 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   considera. A visita não confirmou o critério real (só "um pouco de tudo?") e
   a unidade lista idosos 60+ como prioritários; ver premissa P3.
 - A unidade tem duas etapas (triagem e consulta) e o núcleo é uma fila só.
-  Precisa evoluir (RF25), por um ADR em rascunho (ver "Propostas abertas").
+  Decidido no ADR docs/adr/2026-11-24-etapas-e-estados-do-paciente.md (aceito
+  por Miguel em 2026-11-26; issue #23): o estado do paciente fica num registro
+  único (uma tabela), com cinco estados, e há uma `Fila` por etapa montada a
+  partir dele: triagem por ordem de chegada e consulta por risco. **As duas
+  regras de ordem são HIPÓTESE (P3).** A regra por risco e a mudança de etapa
+  ainda não existem no núcleo (RF25).
 - Decisões de projeto do algoritmo: seis convenções internas decididas e
   travadas por testes (ordem calculada na hora, desempate pela ordem de entrada,
   `null` versus erro, posição a partir de 1, retrato em cópia, a `Fila` só usa o
@@ -97,14 +102,7 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   (aceito por Miguel em 2026-11-18; issue #5).
 
 ## Propostas abertas
-- ADR da fila em duas etapas e estados do paciente (triagem e consulta, RF25;
-  issue #23): rascunho com status Proposto em
-  docs/adr/2026-11-24-fila-em-duas-etapas-e-papel-do-fila-core.md (o nome do
-  arquivo é antigo). Só trata da representação das etapas e dos estados;
-  nenhuma alternativa foi escolhida, a decisão é da dupla.
-- Onde roda o código da fila (papel do `fila_core` frente ao Supabase): fica no
-  ADR do PR #27 (Proposto), que reúne as alternativas A a E, inclusive um
-  servidor Dart próprio. Nenhuma foi escolhida.
+- (nenhuma no momento)
 
 ## Pendências e dúvidas
 - Alguém tem conta Apple Developer (paga) para o push no iOS? Sem ela, o push
@@ -126,8 +124,9 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Qual o papel do `fila_core` frente ao ADR de backend? O ADR põe a lógica da
   fila e da estimativa em SQL no Supabase, e o `fila_core` é Dart puro (o
   app/README.md diz que backend e telas se conectam ao núcleo). Ele roda no
-  app, ou serve de modelo para reescrever a regra em SQL? Decidir pelo ADR
-  "Proposto" do PR #27 antes de ligar o núcleo ao diagrama de componentes.
+  app, ou serve de modelo para reescrever a regra em SQL? Decidir por ADR
+  "Proposto" antes de ligar o núcleo ao diagrama de componentes; pode ser o
+  mesmo ADR da fila em duas etapas (RF25).
 - Antes de usar qualquer dataset público, checar licença e LGPD. Links
   levantados: docs/pesquisa/2026-11-17-links-datasets-simulacao-filas.md.
 - Respondidas pela visita (ver requisitos.md): o risco é atribuído na triagem;

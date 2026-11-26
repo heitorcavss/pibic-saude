@@ -48,15 +48,15 @@ Nota: nesta documentação, Administrador é quem configura a unidade e as regra
 | RF07 | Na primeira versão a fila é única, e o consultório só aparece na chamada (RF26). O check-in não escolhe tipo de atendimento nem sala. Corresponde à opção A das perguntas em aberto; a escolha final é da dupla. | visita; a decidir pela dupla |
 | RF23 | Ao entrar na fila, o paciente deve receber um código de atendimento anônimo (por exemplo, um número sequencial do dia), usado no lugar do nome para ser chamado. A unidade não usa senha hoje e chama por nome na TV. O núcleo da fila ainda não gera código. O ID segue a ordem de criação, não a de sprint. | visita (não há senha; nome na TV); proposta nossa, muda o que a unidade faz hoje |
 | RF08 | Deve ser possível validar que o paciente está de fato na unidade (por exemplo, QR code no local ou geolocalização). | hipótese |
-| RF25 | A fila tem duas etapas: aguardando triagem e aguardando consulta. O paciente passa para a segunda quando sai da triagem. A unidade visitada tem 1 sala de triagem e cerca de 3 consultórios, e a mesma chamada serve às duas etapas. O núcleo da fila hoje é uma fila só e precisa evoluir (ADR em rascunho em `docs/adr/2026-11-24-fila-em-duas-etapas-e-papel-do-fila-core.md`; ver `docs/modelagem/estados-do-paciente.md`). O ID segue a ordem de criação. | visita |
+| RF25 | A fila tem duas etapas: aguardando triagem e aguardando consulta. O paciente passa para a segunda quando sai da triagem. A unidade visitada tem 1 sala de triagem e cerca de 3 consultórios, e a mesma chamada serve às duas etapas. O núcleo da fila hoje é uma fila só e precisa evoluir (decidido em `docs/adr/2026-11-24-etapas-e-estados-do-paciente.md`; ver `docs/modelagem/estados-do-paciente.md`). O ID segue a ordem de criação. | visita |
 
 ## Sprint 2 — Monitoramento da fila de espera
 
 | ID | Requisito | Origem |
 |----|-----------|--------|
 | RF09 | O paciente deve ver a própria posição e o tamanho da fila, atualizados sem recarregar a tela. | código (`posicaoDe`, `tamanho`); atualização em tempo real depende do ADR de backend |
-| RF10 | Deve ser possível chamar o próximo paciente (`Fila.chamarProximo`). Na unidade vimos a chamada por voz e painel, mas não quem opera o painel (recepção, triagem ou médico). No app, a equipe da unidade chama até haver resposta; quem exerce esse papel fica a confirmar. Quando a chamada é para a consulta, informa o consultório (RF26). | código; visita; a confirmar (pergunta 8) |
-| RF11 | A equipe da unidade deve ver a fila completa, na ordem definida pela regra de ordenação ativa. | hipótese |
+| RF10 | Deve ser possível chamar o próximo paciente (`Fila.chamarProximo`). Na unidade vimos a chamada por voz e painel, mas não quem opera o painel (recepção, triagem ou médico). No app, a recepção chama até haver resposta. Quando a chamada é para a consulta, informa o consultório (RF26). | código; visita; a confirmar (pergunta 8) |
+| RF11 | A recepção deve ver a fila completa, na ordem definida pela regra de ordenação ativa. | hipótese |
 | RF12 | O paciente deve poder desistir da fila. O núcleo ainda não tem essa operação. | pendência registrada no README do `fila_core` |
 | RF13 | O app deve mostrar uma estimativa de tempo de espera como faixa (por exemplo, 20 a 30 min), não como número exato, calculada por etapa (espera pela triagem e espera pela consulta). A unidade não informa o tempo restante hoje. Os valores iniciais usam a ordem de grandeza da visita, com faixa larga por causa da amostra pequena (espera até a triagem de 2 a pelo menos 10 min, triagem de 3 a 8 min, triagem até a consulta de 3 a mais de 36 min, consulta de ~6 a mais de 24 min). As esperas mais longas foram depois da triagem (dois pacientes de pulseira verde), mas a etapa que limita o fluxo não está confirmada. Depois passa a usar a média real medida pelo app. Sem prazo por cor (P2). | visita; hipótese; premissas P2 e P6; valores a refinar em nova observação |
 | RF24 | O sistema deve registrar o início e o fim de cada etapa (triagem e consulta), para medir a duração real. Na unidade ninguém registra o fim da consulta: o paciente só vai embora. Como o fim será marcado (pela recepção, ou pela chamada seguinte no mesmo consultório) é decisão da dupla com a orientadora. O núcleo da fila só tem `chamarProximo`, sem o "fim". O ID segue a ordem de criação. | visita; hipótese; depende do RF13 |
@@ -87,7 +87,7 @@ Nota: nesta documentação, Administrador é quem configura a unidade e as regra
 | ID | Requisito | Origem |
 |----|-----------|--------|
 | RNF01 | **LGPD**: nenhum dado real de paciente no repositório. O app trata só dados fictícios no protótipo e coleta o mínimo necessário. | AGENTS.md |
-| RNF02 | Deve haver caminho para exclusão dos dados do paciente. | ADR de backend (aceito) |
+| RNF02 | Deve haver caminho para exclusão dos dados do paciente. | ADR de backend (proposto) |
 | RNF03 | Nenhuma credencial ou chave no código; uso de variáveis de ambiente. | AGENTS.md |
 | RNF04 | O protótipo deve usar apenas planos gratuitos. | premissa informada pela dupla |
 | RNF05 | O app deve rodar em Android e iOS (Flutter). | ADR do Flutter |
@@ -123,7 +123,7 @@ A visita de 2026-11-19 (UPA de urgência, observação de ~1 h 20 min) respondeu
 7. Como a unidade chama o paciente hoje (senha impressa, nome, número)? Qual é o formato da senha? (RF23)
    **Respondida pela visita.** **Não há senha.** Chama pelo nome completo e pelo consultório, por voz e painel; sem resposta em 3 chamadas, é marcada falta. Se a fila anda sem o paciente é suposição (P5). Fora da sala a chamada é muito difícil de ouvir.
 8. Quem opera o painel e avança a fila: recepção, triagem ou médico? (RF10, atores)
-   **Não respondida.** Não vimos. No app, a equipe da unidade chama até haver resposta; quem exerce esse papel fica a confirmar.
+   **Não respondida.** Não vimos. No app, a recepção chama até haver resposta.
 
 Sem acesso à unidade, o que resta depende de decisão da dupla, da orientadora ou de uma nova observação, caso a unidade permita.
 
