@@ -92,17 +92,20 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 
 ## Decisões vigentes (ADRs aceitos)
 - Flutter (Dart) como plataforma mobile: docs/adr/2026-11-16-escolha-do-flutter.md.
-- Backend, banco e push: Supabase (Postgres, Auth, Realtime, RLS) + FCM, sem
-  servidor próprio nesta fase: docs/adr/2026-11-17-backend-banco-push.md
-  (aceito por Miguel em 2026-11-18; issue #5).
+- Backend, banco e push: Supabase (Postgres, Auth, Realtime, RLS) + FCM:
+  docs/adr/2026-11-17-backend-banco-push.md (aceito por Miguel em
+  2026-11-18; issue #5). Complementado pelo ADR logo abaixo, que revê o
+  trecho "sem servidor próprio nesta fase".
+- Servidor Dart para a lógica da fila: a lógica da fila (`fila_core`) roda num
+  servidor Dart próprio, que a cada pedido lê o Supabase, calcula e grava;
+  banco, login, RLS, tempo real e push seguem no Supabase e FCM. **Hospedagem
+  e framework do servidor ainda estão a definir pela equipe.**
+  docs/adr/2026-11-24-servidor-dart-para-a-logica-da-fila.md (aceito por
+  Miguel em 2026-11-26; issue #23).
 
 ## Propostas abertas
 - ADR da fila em duas etapas (triagem e consulta, RF25): a propor, ainda não
   escrito.
-- ADR "Servidor em Dart para a lógica da fila" (Proposto, rascunho): lógica da
-  fila em servidor Dart próprio (Render, com possível troca para Cloud Run),
-  banco, login, RLS e push no Supabase e FCM. Se aceito, altera uma
-  consequência do ADR de backend aceito. Ver docs/adr/2026-11-24-servidor-dart-para-a-logica-da-fila.md.
 
 ## Pendências e dúvidas
 - Alguém tem conta Apple Developer (paga) para o push no iOS? Sem ela, o push
@@ -121,12 +124,9 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - `posicaoDe` devolve `null` para quem está em triagem, em consulta, em falta
   ou nunca entrou: a `Fila` só enxerga quem espera, e os 5 estados do paciente
   precisam morar numa camada acima. Propor no ADR do RF25.
-- Qual o papel do `fila_core` frente ao ADR de backend? O ADR põe a lógica da
-  fila e da estimativa em SQL no Supabase, e o `fila_core` é Dart puro (o
-  app/README.md diz que backend e telas se conectam ao núcleo). Ele roda no
-  app, ou serve de modelo para reescrever a regra em SQL? Decidir por ADR
-  "Proposto" antes de ligar o núcleo ao diagrama de componentes; pode ser o
-  mesmo ADR da fila em duas etapas (RF25).
+- Hospedagem (Render grátis ou Cloud Run, com cartão) e framework (Dart Frog,
+  Serverpod ou Shelf) do servidor Dart: a definir pela equipe. Ver as perguntas
+  em aberto do ADR do servidor Dart.
 - Antes de usar qualquer dataset público, checar licença e LGPD. Links
   levantados: docs/pesquisa/2026-11-17-links-datasets-simulacao-filas.md.
 - Respondidas pela visita (ver requisitos.md): o risco é atribuído na triagem;

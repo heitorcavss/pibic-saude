@@ -1,16 +1,23 @@
 # 2026-11-24 — Servidor em Dart para a lógica da fila
 
-Status: Proposto
-Autor: Heitor (rascunho com apoio do Claude)   Aprovado por: —
+Status: Aceito
+Autor: Heitor (rascunho com apoio do Claude)   Aprovado por: Miguel (2026-11-26)
 
-> Rascunho para a dupla discutir. Só um humano muda o status para Aceito
-> (AGENTS.md). **Se aceito, altera uma consequência do ADR de backend
-> aceito** (`2026-11-17-backend-banco-push.md`: "não há servidor para manter;
-> a lógica da fila fica em SQL"). Relacionado: issue #23. Este ADR trata só da
-> arquitetura (onde roda o código da fila); o PR #26 trata de como representar
-> as duas etapas e os estados do paciente.
-> Os números de planos gratuitos vêm de buscas feitas em 2026-11-24 e **devem
-> ser reconferidos nas páginas oficiais** antes de aceitar.
+> **Complementa o ADR de backend** (`2026-11-17-backend-banco-push.md`), sem
+> substituí-lo: aquele foi o primeiro passo (Supabase + FCM) e este acrescenta
+> um servidor Dart para a lógica da fila. O trecho "sem servidor próprio nesta
+> fase" e a consequência "não há servidor para manter; a lógica da fila fica em
+> SQL" foram revistos aqui. O resto do ADR de backend continua valendo.
+>
+> **O que foi aceito:** a decisão de arquitetura (a lógica da fila roda num
+> servidor Dart próprio). **Hospedagem e framework do servidor ainda estão a
+> definir pela equipe.** Os números de planos gratuitos vêm de buscas feitas em
+> 2026-11-24 e **devem ser reconferidos nas páginas oficiais** antes de
+> escolher a hospedagem.
+>
+> Relacionado: issue #23. Este ADR trata só da arquitetura (onde roda o código
+> da fila); o ADR `2026-11-24-etapas-e-estados-do-paciente.md` (PR #26) trata de
+> como representar as duas etapas e os estados do paciente.
 
 ## Contexto
 O ADR aceito põe a lógica da fila (ordem, posição, estimativa) em SQL no
@@ -40,14 +47,25 @@ Celular (Flutter)
 Supabase: mudança no banco ──► Edge Function ──► FCM ──► celular
 ```
 
-**Hospedagem inicial: Render (plano grátis, sem cartão).** Mantém a regra de
-custo zero do ADR de backend. **Possível mudança para o Google Cloud Run**, se
-a espera do Render atrapalhar (ver Consequências).
+**O servidor não guarda a fila na memória.** A cada pedido, ele lê no Supabase
+os pacientes que esperam, monta a `Fila` do `fila_core`, calcula e grava o
+resultado. Isso combina com o núcleo, que já calcula a ordem na hora, e
+funciona mesmo que o servidor durma ou reinicie. É o desenho interno da
+alternativa D (o banco guarda o estado; o Dart calcula a ordem) dentro da E.
+
+**Hospedagem e framework: a definir pela equipe.** O que se levantou até agora
+(nada disso está decidido):
+- Hospedagem: Render (plano grátis, sem cartão) ou Google Cloud Run (exige
+  cartão). A regra de custo zero do ADR de backend vale ao escolher.
+- Framework: Dart Frog, Serverpod ou Shelf.
+- Seja qual for a escolha, empacotar o servidor com Docker deixa barato trocar
+  de hospedagem depois.
 
 ## Alternativas consideradas
 Todas respondem a mesma pergunta: **onde roda o código que decide a ordem da
 fila?** As alternativas A a D vieram do rascunho do PR #26 (issue #23) e foram
-trazidas para cá, porque esta é uma decisão de arquitetura.
+trazidas para cá, porque esta é uma decisão de arquitetura. **Escolhida: E.**
+A, B e C ficam descartadas, e a D vira o desenho interno da E.
 
 ### A. O `fila_core` roda no app
 O app calcula a ordem e a posição; o Supabase só guarda e distribui os dados.
@@ -83,8 +101,9 @@ calcula só a ordenação de uma etapa, recebendo a lista pronta.
 - Mais difícil: dois lugares mexem na fila, e o limite entre eles precisa ser
   desenhado com cuidado. Como a A, muda uma consequência do ADR de backend
   aceito.
+- Rodando no servidor da E, é este o desenho interno adotado (ver Decisão).
 
-### E. Servidor Dart próprio (esta proposta)
+### E. Servidor Dart próprio (escolhida)
 O `fila_core` roda num servidor nosso, e o Supabase fica com banco, login,
 RLS, tempo real e push (ver Decisão).
 - Mais fácil: regra autoral em Dart e testável sem banco; uma linguagem só nos
@@ -97,7 +116,7 @@ RLS, tempo real e push (ver Decisão).
   reescreve o `fila_core` em outra linguagem.
 - **E com Cloud Run desde o início:** melhor tecnicamente (sem a espera do
   Render), mas exige conta de cobrança com cartão, o que fere "sem verba".
-  Fica como opção de troca.
+  Continua como opção de hospedagem a definir.
 - **E com Fly.io:** sem plano grátis permanente para contas novas (fontes de
   2026).
 
@@ -106,20 +125,27 @@ RLS, tempo real e push (ver Decisão).
 reaproveitando o `fila_core`; uma linguagem só nos dois lados.
 
 **Fica mais difícil:**
-- **Hospedagem.** No Render grátis o servidor dorme após 15 min parado e leva
-  cerca de 1 min para acordar; o primeiro acesso do dia seria lento. Mitigação:
-  ping periódico (o mesmo truque previsto para o Supabase). Foi esse tipo de
-  limite que levou o ADR de backend a descartar o "backend próprio".
+- **Hospedagem (depende da escolha).** No Render grátis o servidor dorme após
+  15 min parado e leva cerca de 1 min para acordar; o primeiro acesso do dia
+  seria lento. Mitigação: ping periódico (o mesmo truque previsto para o
+  Supabase). Foi esse tipo de limite que levou o ADR de backend a descartar o
+  "backend próprio".
 - **Segurança.** O servidor escreve no banco com a chave de administrador
   (`service_role`), que passa por cima da RLS. A segurança de escrita passa a
   depender do código Dart, e essa chave nunca pode ir para dentro do app.
 - **Login.** O servidor precisa validar o token que o Supabase deu ao usuário
   para saber quem está pedindo.
+- **LGPD e região.** O servidor é mais um lugar por onde passam dados de
+  pacientes, e o ADR de backend já cuidou da região do Supabase (São Paulo).
+  Pelo que se sabe, o Render não tem região no Brasil e o Cloud Run tem São
+  Paulo (**a confirmar nas páginas oficiais**). Com dados fictícios isso não
+  pesa; deve ser revisto antes de qualquer dado real (RNF01).
 - **Mais peças:** Dart, TypeScript (Edge Function) e SQL (tabelas), com
   Supabase, servidor e FCM para operar. A dupla domina Python e SQL; Dart no
   servidor é novidade.
 
-**Se trocar para o Cloud Run (a decidir com o Miguel e a orientadora):**
+**Se a hospedagem escolhida for o Cloud Run (a definir pela equipe e pela
+orientadora):**
 - Exige alguém cadastrar um cartão na conta de cobrança. A cota gratuita
   (cerca de 2 milhões de requisições por mês, segundo as fontes) fica muito
   acima da estimativa do projeto (cerca de 60 mil mensagens por mês).
@@ -128,27 +154,27 @@ reaproveitando o `fila_core`; uma linguagem só nos dois lados.
 - Há menção a um "Starter Tier" do Google sem cartão; as fontes divergem sobre
   servir para o Cloud Run. Conferir antes de contar com ele.
 
-**Se aceito:**
-- Escrever o ADR que **substitui** a consequência "sem servidor" do ADR de
-  backend, e marcar a relação nos dois.
-- Atualizar `app/README.md`, a seção "Núcleo da fila" e as pendências do
-  MEMORY.md, e os RF que citam onde a fila é calculada (ver PR #26).
-- O AGENTS.md hoje diz "sem servidor próprio nesta fase": só um humano muda
-  essa regra.
-- Qualquer que seja a alternativa escolhida (A a E), atualizar os RF que citam
-  operações do Dart ou dependem de onde a fila é calculada (RF03, RF05, RF07,
-  RF09, RF10 e RF14 em `requisitos.md`) e o `app/README.md`.
-- As alternativas A, D e E mudam uma consequência do ADR de backend aceito
-  (a lógica da fila deixa de ficar só em SQL); B e C não o alteram.
+**Próximos passos (feitos à parte, no PR "Atualizar documentação após as ADRs"):**
+- O ADR de backend ganha, no topo, um aviso de que foi complementado por este
+  (já incluído neste PR). O resto dele não muda.
+- Atualizar `AGENTS.md` (seção Stack, que dizia "sem servidor próprio nesta
+  fase"; mudança aprovada por Miguel em 2026-11-26 junto com este ADR),
+  `app/README.md`, a seção "Núcleo da fila" e as pendências do `MEMORY.md`,
+  `docs/modelagem/arquitetura-e-fluxo.md` e os RF que citam onde a fila é
+  calculada (RF03, RF05, RF07, RF09, RF10 e RF14 em `requisitos.md`).
 
 ## Perguntas em aberto
-- O Miguel aceita o servidor próprio e a hospedagem no Render (ou no Cloud
-  Run, com cartão)?
-- Qual framework Dart usar (Dart Frog, Serverpod ou Shelf)? Pesquisar antes.
-- O Supabase aceita chamar o servidor externo (webhook ou chamada do app)? O
-  desenho assume que sim; **não foi verificado na documentação**.
-- A espera de cerca de 1 min do Render é aceitável para as demonstrações?
+- Qual hospedagem usar: Render grátis ou Cloud Run, com cartão? A equipe
+  decide, e a orientadora entra se for preciso cartão.
+- Qual framework Dart usar (Dart Frog, Serverpod ou Shelf)? Fazer um
+  experimento curto antes de escolher. O Serverpod traz banco e login próprios,
+  o que pode conflitar com manter essas partes no Supabase.
+- O Supabase consegue chamar um servidor externo (webhook do banco)? O app
+  chama o servidor direto, então isso só importa se o banco precisar acionar o
+  servidor (por exemplo, para o aviso de "vez próxima"). **Não foi verificado
+  na documentação.**
+- Se for o Render, a espera de cerca de 1 min é aceitável nas demonstrações?
 - As perguntas sobre o comportamento da fila (o `id` que volta à fila, as 3
-  chamadas antes da falta, a estimativa junto da ordem ou separada) e como
-  representar as duas etapas e os estados do paciente ficam no PR #26, e não
-  mudam com esta decisão.
+  chamadas antes da falta, a estimativa junto da ordem ou separada) e a forma de
+  representar as duas etapas e os estados do paciente ficam no ADR do PR #26, e
+  não mudam com esta decisão.
