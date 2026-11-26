@@ -69,7 +69,7 @@ O app tem três perfis: o **paciente**, que faz o check-in e acompanha a fila; a
 | Saber quanto falta | Ninguém informa | Estimativa em faixa (por exemplo, 20 a 30 min), calculada pela média dos atendimentos anteriores e pelos pacientes à frente |
 | Ser chamado | Voz e TV, com nome completo; quase não se ouve fora da sala | Aviso no celular quando a vez estiver próxima e quando for chamado, com o consultório, mesmo com o app fechado |
 | Privacidade | O nome completo aparece na TV | Chamada pelo código, sem o nome (proposta nossa, muda o que a unidade faz hoje) |
-| Ordem de atendimento | Critério não confirmado | Triagem por ordem de chegada; consulta por risco, com empate por chegada (hipótese) |
+| Ordem de atendimento | Critério não confirmado | Regra de trabalho, só para testar: triagem por ordem de chegada e consulta por risco, com empate por chegada. A ordem real segue em aberto |
 
 O paciente também poderá informar uma condição que dá prioridade legal, como ser idoso, gestante ou pessoa com deficiência. Como essa prioridade se combina com o risco é uma das dúvidas abaixo.
 
@@ -107,7 +107,7 @@ São dez dúvidas de gestão, processo, pesquisa e avaliação. Cada uma diz o q
 
 | # | Dúvida | O que destrava | Se não houver resposta |
 |---|---|---|---|
-| 1 | Na unidade, o risco clínico vem antes da prioridade legal (idosos, gestantes, pessoas com deficiência) ou é o contrário? Existe um critério oficial para a ordem da triagem e da consulta? | A regra de ordem do app (premissa 3) | Triagem por chegada e consulta por risco, tratadas como hipótese e fáceis de trocar |
+| 1 | Na unidade, o risco clínico vem antes da prioridade legal (idosos, gestantes, pessoas com deficiência) ou é o contrário? Existe um critério oficial para a ordem da triagem e da consulta? | A regra de ordem do app (premissa 3) | Chegada na triagem e risco na consulta, só como regra de trabalho para testar e fácil de trocar |
 | 2 | Quem, na unidade ou na gestão municipal, pode autorizar uma segunda observação e confirmar pontos que não vimos: a escala de risco usada (premissa 1), quem faz a triagem (4), o que ocorre após a falta e o intervalo entre as três chamadas (5), e se há consultas agendadas (6)? | Fechar as premissas e refinar as estimativas de tempo | Seguimos com as premissas declaradas e deixamos cada uma configurável no app |
 | 3 | Quem é o "cliente" que autoriza o uso do app e a exibição do nome do paciente (premissa 7)? | Autorização do uso e tratamento dos dados | Apenas dados fictícios e código no lugar do nome |
 | 4 | A proposta define o administrador como o profissional da triagem ou da recepção que confirma cada etapa. Na documentação usamos "administrador" para quem configura a unidade e "equipe da unidade" para quem avança a fila, porque não vimos quem opera o painel. Essa mudança é aceitável? | Os perfis de usuário e as telas da equipe | Mantemos a divisão atual e a registramos como diferença em relação à proposta |
