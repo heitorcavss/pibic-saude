@@ -97,10 +97,14 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   (aceito por Miguel em 2026-11-18; issue #5).
 
 ## Propostas abertas
-- ADR da fila em duas etapas (triagem e consulta, RF25) e do papel do
-  `fila_core` frente ao Supabase (issue #23): rascunho com status Proposto em
-  docs/adr/2026-11-24-fila-em-duas-etapas-e-papel-do-fila-core.md. Nenhuma
-  alternativa foi escolhida; a decisão é da dupla.
+- ADR da fila em duas etapas e estados do paciente (triagem e consulta, RF25;
+  issue #23): rascunho com status Proposto em
+  docs/adr/2026-11-24-fila-em-duas-etapas-e-papel-do-fila-core.md (o nome do
+  arquivo é antigo). Só trata da representação das etapas e dos estados;
+  nenhuma alternativa foi escolhida, a decisão é da dupla.
+- Onde roda o código da fila (papel do `fila_core` frente ao Supabase): fica no
+  ADR do PR #27 (Proposto), que reúne as alternativas A a E, inclusive um
+  servidor Dart próprio. Nenhuma foi escolhida.
 
 ## Pendências e dúvidas
 - Alguém tem conta Apple Developer (paga) para o push no iOS? Sem ela, o push
@@ -122,9 +126,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - Qual o papel do `fila_core` frente ao ADR de backend? O ADR põe a lógica da
   fila e da estimativa em SQL no Supabase, e o `fila_core` é Dart puro (o
   app/README.md diz que backend e telas se conectam ao núcleo). Ele roda no
-  app, ou serve de modelo para reescrever a regra em SQL? Decidir por ADR
-  "Proposto" antes de ligar o núcleo ao diagrama de componentes; pode ser o
-  mesmo ADR da fila em duas etapas (RF25).
+  app, ou serve de modelo para reescrever a regra em SQL? Decidir pelo ADR
+  "Proposto" do PR #27 antes de ligar o núcleo ao diagrama de componentes.
 - Antes de usar qualquer dataset público, checar licença e LGPD. Links
   levantados: docs/pesquisa/2026-11-17-links-datasets-simulacao-filas.md.
 - Respondidas pela visita (ver requisitos.md): o risco é atribuído na triagem;
