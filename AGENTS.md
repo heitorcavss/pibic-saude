@@ -14,9 +14,12 @@ Ver MEMORY.md. Ele é a fonte do que está decidido e em andamento.
 ## Stack
 - App mobile: Flutter (Dart), conforme o ADR 2026-11-16-escolha-do-flutter.
 - Backend, banco, login e tempo real: Supabase (Postgres, Auth, Realtime,
-  regras de acesso por RLS). Push: FCM. Sem servidor próprio nesta fase.
-  Conforme o ADR 2026-11-17-backend-banco-push. Chaves e URLs ficam em
-  variáveis de ambiente, nunca no código.
+  regras de acesso por RLS). Push: FCM. Conforme o ADR
+  2026-11-17-backend-banco-push.
+- Servidor Dart: roda a lógica da fila (`fila_core`) e grava no Supabase.
+  Hospedagem e framework ainda a definir pela equipe. Conforme o ADR
+  2026-11-24-servidor-dart-para-a-logica-da-fila.
+- Chaves e URLs ficam em variáveis de ambiente, nunca no código.
 
 ## Como trabalhar
 - Comece cada tarefa com um plano curto e espere aprovação humana.
