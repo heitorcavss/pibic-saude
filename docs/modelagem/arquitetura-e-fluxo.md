@@ -1,7 +1,8 @@
 # Arquitetura em componentes e fluxo do check-in à notificação
 
-**Status: Estável.** Vem dos ADRs aceitos (Flutter; Supabase + FCM) e do
-projeto oficial (seção 8, resumida no README.md da raiz).
+**Status: Estável.** Vem dos ADRs aceitos (Flutter; Supabase + FCM; servidor
+Dart para a lógica da fila) e do projeto oficial (seção 8, resumida no
+README.md da raiz).
 
 Regras desta pasta: [README.md](README.md).
 
@@ -23,12 +24,16 @@ flowchart LR
         edge["Edge Function<br/>(TypeScript)"]
     end
 
+    servidor["Servidor Dart<br/>(fila_core)"]
     fcm["FCM (Google)"]
 
     paciente --> app
     equipe --> app
     app -->|"login"| auth
-    app -->|"lê e grava"| banco
+    app -->|"lê"| banco
+    app -->|"entra na fila,<br/>chama o próximo"| servidor
+    servidor -->|"confere o login"| auth
+    servidor -->|"lê e grava a fila"| banco
     banco -->|"mudanças"| realtime
     realtime -->|"atualiza em tempo real"| app
     banco -->|"webhook do banco"| edge
@@ -40,6 +45,7 @@ flowchart LR
 |---|---|
 | App móvel em Flutter | ADR `2026-11-16-escolha-do-flutter` |
 | Supabase: Auth, Postgres com RLS, Realtime | ADR `2026-11-17-backend-banco-push` |
+| Servidor Dart que roda o `fila_core`, lê e grava a fila no Supabase e confere o login | ADR `2026-11-24-servidor-dart-para-a-logica-da-fila`. Onde ele é hospedado e com qual framework não está decidido, e por isso não aparece no desenho |
 | Edge Function em TypeScript que dispara o push | ADR `2026-11-17-backend-banco-push`, seção Consequências; o disparo por webhook do banco vem do guia oficial citado no ADR |
 | FCM entrega a notificação, inclusive com o app fechado | ADR `2026-11-17-backend-banco-push`; projeto oficial |
 | Paciente e equipe da unidade como usuários do app | Projeto oficial (perfis); visita (recepção, triagem e consulta são pessoas e etapas distintas) |
@@ -54,11 +60,11 @@ equipe (roxo) e sistema (cinza).
 ```mermaid
 flowchart TD
     subgraph A[" "]
-        aT["A. Entrar na fila"]:::titulo ~~~ a1(["1. Paciente faz<br/>o check-in"]):::paciente --> a2(["2. Banco confere<br/>e grava"]):::sistema --> a3(["3. Telas atualizam<br/>(tempo real)"]):::sistema
+        aT["A. Entrar na fila"]:::titulo ~~~ a1(["1. Paciente faz<br/>o check-in"]):::paciente --> a2(["2. Servidor confere<br/>e grava no banco"]):::sistema --> a3(["3. Telas atualizam<br/>(tempo real)"]):::sistema
     end
 
     subgraph B[" "]
-        bT["B. Andar a fila"]:::titulo ~~~ b1(["4. Equipe confirma<br/>a etapa concluída"]):::equipe --> b2(["5. Banco grava o avanço<br/>e as telas atualizam"]):::sistema
+        bT["B. Andar a fila"]:::titulo ~~~ b1(["4. Equipe confirma<br/>a etapa concluída"]):::equipe --> b2(["5. Servidor grava o avanço<br/>e as telas atualizam"]):::sistema
     end
 
     subgraph C[" "]
@@ -85,15 +91,18 @@ flowchart TD
 
 | Passo | Fonte |
 |---|---|
-| 1 a 3 | Projeto oficial (check-in digital e monitoramento em tempo real); ADR (grava no banco, Realtime) |
-| 4 e 5 | Projeto oficial: alguém "confirma no sistema cada etapa concluída, permitindo o avanço da fila". Quem faz isso não foi visto na visita |
-| 6 | Projeto oficial (aviso quando a vez estiver próxima) e RF16 e RF17 (perto de ser chamado; chamado agora). **Hipótese de desenho:** quem faz essa conferência (banco ou Edge Function) não está decidido |
+| 1 a 3 | Projeto oficial (check-in digital e monitoramento em tempo real); ADRs (o servidor Dart grava no banco, Realtime) |
+| 4 e 5 | Projeto oficial: alguém "confirma no sistema cada etapa concluída, permitindo o avanço da fila"; ADR do servidor Dart (quem avança a fila passa pelo servidor). Quem faz isso não foi visto na visita |
+| 6 | Projeto oficial (aviso quando a vez estiver próxima) e RF16 e RF17 (perto de ser chamado; chamado agora). **Hipótese de desenho:** quem faz essa conferência (banco, servidor ou Edge Function) não está decidido |
 | 7 a 10 | Projeto oficial (aviso com o app fechado); ADR (banco, Edge Function, FCM) |
 
 Termos do desenho:
 
-- **Banco confere** (passos 2 e 5): as regras de acesso do Supabase (RLS) só
-  deixam o paciente entrar na fila e só deixam a equipe avançá-la.
+- **Servidor confere** (passos 2 e 5): o servidor Dart confere quem está
+  pedindo (o login do Supabase), aplica a regra da fila (`fila_core`) e só
+  então grava: só deixa o paciente entrar na fila e só deixa a equipe
+  avançá-la. As regras de acesso do Supabase (RLS) valem para o que o app lê
+  direto do banco.
 - **Tempo real** (Realtime): o servidor avisa os aparelhos conectados quando a
   fila muda, sem o app precisar perguntar.
 - **Webhook** (passo 7): aviso automático do banco a outro programa quando
@@ -108,9 +117,11 @@ Termos do desenho:
 
 Nada abaixo está decidido, então nada abaixo foi desenhado:
 
-- **Papel do `fila_core`**: o ADR põe a lógica da fila em SQL no Supabase, e o
-  `fila_core` é Dart puro. Se ele roda no app ou serve de modelo para o SQL
-  não está definido. Está em "Pendências" do MEMORY.md.
+- **Hospedagem e framework do servidor Dart.** O desenho mostra o servidor sem
+  dizer onde ele roda nem com qual framework: a equipe ainda vai definir
+  (ADR `2026-11-24-servidor-dart-para-a-logica-da-fila`). Há uma proposta
+  em discussão, ainda não aceita: ADR `2026-11-27-hospedagem-e-framework-do-servidor-dart`
+  (status Proposto).
 - **Quem avança a fila.** A visita não mostrou quem opera o painel (pergunta 8
   em `docs/requisitos/requisitos.md`), por isso o desenho diz "equipe da
   unidade". "Administrador" é só quem configura a unidade.

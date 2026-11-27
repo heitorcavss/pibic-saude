@@ -20,6 +20,9 @@ Otimização de Atendimento".
    - Em ambas, o app mostra a posição e uma estimativa de tempo até o
      chamado (média dos atendimentos anteriores e pacientes à frente;
      na segunda etapa, também o fator de risco).
+   - A ordem acima vem da proposta do projeto e é regra de trabalho, só para
+     poder testar: a visita não a confirmou e a ordem real da unidade segue em
+     aberto (ver `docs/requisitos/requisitos.md`, premissa P3).
 3. **Notificações push** quando a vez estiver próxima, indicando a etapa e
    o local de atendimento, mesmo com o app fechado.
 
