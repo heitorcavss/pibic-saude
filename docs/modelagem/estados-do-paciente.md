@@ -38,10 +38,12 @@ unidade, com ou sem o app.
 
 ## Relação com o código
 
-A ligação entre estes estados e o `fila_core` está **em aberto**. Hoje o núcleo
-é uma fila só, e a regra por risco não existe. Como ele evolui para duas etapas
-(RF25) e qual é o seu papel frente ao ADR de backend estão em rascunho em
-`docs/adr/2026-11-24-fila-em-duas-etapas-e-papel-do-fila-core.md` (issue #23).
+Hoje o núcleo é uma fila só, e a regra por risco não existe. Como ele evolui
+para duas etapas (RF25) está decidido em
+`docs/adr/2026-11-24-etapas-e-estados-do-paciente.md` (issue #23): o estado do
+paciente fica num registro único, com estes cinco estados, e há uma `Fila` por
+etapa montada a partir dele. As regras de ordem de cada fila são hipótese
+(premissa P3), e as dúvidas que sobram estão no fim desse ADR.
 
 ## Fora deste diagrama (de propósito)
 
