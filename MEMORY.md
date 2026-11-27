@@ -106,6 +106,10 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 ## Propostas abertas
 - ADR da fila em duas etapas (triagem e consulta, RF25): a propor, ainda não
   escrito.
+- ADR "Hospedagem e framework do servidor Dart" (Proposto): Render grátis em
+  Docker, região Virgínia, com Dart Frog; Cloud Run como plano B. Falta um
+  experimento curto antes de aceitar. Ver
+  docs/adr/2026-11-27-hospedagem-e-framework-do-servidor-dart.md.
 
 ## Pendências e dúvidas
 - Alguém tem conta Apple Developer (paga) para o push no iOS? Sem ela, o push
@@ -124,9 +128,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - `posicaoDe` devolve `null` para quem está em triagem, em consulta, em falta
   ou nunca entrou: a `Fila` só enxerga quem espera, e os 5 estados do paciente
   precisam morar numa camada acima. Propor no ADR do RF25.
-- Hospedagem (Render grátis ou Cloud Run, com cartão) e framework (Dart Frog,
-  Serverpod ou Shelf) do servidor Dart: a definir pela equipe. Ver as perguntas
-  em aberto do ADR do servidor Dart.
+- Hospedagem e framework do servidor Dart: proposta aberta (Render + Dart
+  Frog), ver "Propostas abertas". Até ser aceita, segue a definir.
 - Antes de usar qualquer dataset público, checar licença e LGPD. Links
   levantados: docs/pesquisa/2026-11-17-links-datasets-simulacao-filas.md.
 - Respondidas pela visita (ver requisitos.md): o risco é atribuído na triagem;
