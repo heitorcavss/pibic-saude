@@ -18,6 +18,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   as premissas P1 a P7 não foram validadas com a unidade.
 - Em andamento: modelagem inicial (issue #12, PR #20, em rascunho). Ver
   "Modelagem" abaixo.
+- Concluído: documentação atualizada após os ADRs do servidor Dart e das
+  etapas (AGENTS.md, app/README.md, arquitetura e RF; PR #28, mergeado).
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
 - Sprint 1: check-in digital.
@@ -129,9 +131,6 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - `chamarProximo` tira o paciente da fila na hora da chamada, mas o RF27 prevê
   3 chamadas sem resposta antes da falta: chamar e iniciar o atendimento são
   coisas diferentes? Depende da P5 e da pergunta 8.
-- `posicaoDe` devolve `null` para quem está em triagem, em consulta, em falta
-  ou nunca entrou: a `Fila` só enxerga quem espera, e os 5 estados do paciente
-  precisam morar numa camada acima. Propor no ADR do RF25.
 - Hospedagem e framework do servidor Dart: proposta aberta (Render + Dart
   Frog), ver "Propostas abertas". Até ser aceita, segue a definir.
 - Antes de usar qualquer dataset público, checar licença e LGPD. Links

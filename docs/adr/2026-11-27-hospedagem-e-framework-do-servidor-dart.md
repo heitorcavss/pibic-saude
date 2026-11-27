@@ -102,7 +102,7 @@ login concentrada num middleware.
 - **Plano grátis do Render:** 750 h por mês valem para o workspace inteiro.
   Um segundo serviço grátis dividiria essas horas.
 
-**AGENTS.md:** a seção Stack passa a citar o servidor Dart no PR "Atualizar
+**AGENTS.md:** a seção Stack já cita o servidor Dart desde o PR "Atualizar
 documentação após as ADRs" (#28). Se este ADR for aceito, acrescentar lá
 "hospedado no Render, com Dart Frog". Só um humano muda o AGENTS.md.
 
