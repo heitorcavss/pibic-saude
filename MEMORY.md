@@ -18,6 +18,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   as premissas P1 a P7 não foram validadas com a unidade.
 - Em andamento: modelagem inicial (issue #12, PR #20, em rascunho). Ver
   "Modelagem" abaixo.
+- Concluído: documentação atualizada após os ADRs do servidor Dart e das
+  etapas (AGENTS.md, app/README.md, arquitetura e RF; PR #28, mergeado).
 
 ## Plano de sprints (fonte: cronograma do projeto PIBIC)
 - Sprint 1: check-in digital.
@@ -98,12 +100,22 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 
 ## Decisões vigentes (ADRs aceitos)
 - Flutter (Dart) como plataforma mobile: docs/adr/2026-11-16-escolha-do-flutter.md.
-- Backend, banco e push: Supabase (Postgres, Auth, Realtime, RLS) + FCM, sem
-  servidor próprio nesta fase: docs/adr/2026-11-17-backend-banco-push.md
-  (aceito por Miguel em 2026-11-18; issue #5).
+- Backend, banco e push: Supabase (Postgres, Auth, Realtime, RLS) + FCM:
+  docs/adr/2026-11-17-backend-banco-push.md (aceito por Miguel em
+  2026-11-18; issue #5). Complementado pelo ADR logo abaixo, que revê o
+  trecho "sem servidor próprio nesta fase".
+- Servidor Dart para a lógica da fila: a lógica da fila (`fila_core`) roda num
+  servidor Dart próprio, que a cada pedido lê o Supabase, calcula e grava;
+  banco, login, RLS, tempo real e push seguem no Supabase e FCM. **Hospedagem
+  e framework do servidor ainda estão a definir pela equipe.**
+  docs/adr/2026-11-24-servidor-dart-para-a-logica-da-fila.md (aceito por
+  Miguel em 2026-11-26; issue #23).
 
 ## Propostas abertas
-- (nenhuma no momento)
+- ADR "Hospedagem e framework do servidor Dart" (Proposto): Render grátis em
+  Docker, região Virgínia, com Dart Frog; Cloud Run como plano B. Falta um
+  experimento curto antes de aceitar. Ver
+  docs/adr/2026-11-27-hospedagem-e-framework-do-servidor-dart.md.
 
 ## Pendências e dúvidas
 - Alguém tem conta Apple Developer (paga) para o push no iOS? Sem ela, o push
@@ -119,15 +131,8 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
 - `chamarProximo` tira o paciente da fila na hora da chamada, mas o RF27 prevê
   3 chamadas sem resposta antes da falta: chamar e iniciar o atendimento são
   coisas diferentes? Depende da P5 e da pergunta 8.
-- `posicaoDe` devolve `null` para quem está em triagem, em consulta, em falta
-  ou nunca entrou: a `Fila` só enxerga quem espera, e os 5 estados do paciente
-  precisam morar numa camada acima. Propor no ADR do RF25.
-- Qual o papel do `fila_core` frente ao ADR de backend? O ADR põe a lógica da
-  fila e da estimativa em SQL no Supabase, e o `fila_core` é Dart puro (o
-  app/README.md diz que backend e telas se conectam ao núcleo). Ele roda no
-  app, ou serve de modelo para reescrever a regra em SQL? Decidir por ADR
-  "Proposto" antes de ligar o núcleo ao diagrama de componentes; pode ser o
-  mesmo ADR da fila em duas etapas (RF25).
+- Hospedagem e framework do servidor Dart: proposta aberta (Render + Dart
+  Frog), ver "Propostas abertas". Até ser aceita, segue a definir.
 - Antes de usar qualquer dataset público, checar licença e LGPD. Links
   levantados: docs/pesquisa/2026-11-17-links-datasets-simulacao-filas.md.
 - Respondidas pela visita (ver requisitos.md): o risco é atribuído na triagem;

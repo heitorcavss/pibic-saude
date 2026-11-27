@@ -3,6 +3,11 @@
 Status: Aceito
 Autor: Heitor   Aprovado por: Miguel (2026-11-18)
 
+> **Complementado por** `2026-11-24-servidor-dart-para-a-logica-da-fila.md`
+> (aceito em 2026-11-26): o trecho "sem servidor próprio nesta fase" (Decisão)
+> e a consequência "não há servidor para manter; a lógica da fila fica em SQL"
+> foram revistos lá. O resto deste ADR continua valendo.
+
 > Pesquisa feita em 2026-11-18 com documentações oficiais e, onde indicado,
 > fontes secundárias. Os números de planos gratuitos mudam; reconferir antes
 > de aceitar. O que não foi verificado está marcado "a confirmar".
