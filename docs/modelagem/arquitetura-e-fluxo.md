@@ -119,7 +119,9 @@ Nada abaixo está decidido, então nada abaixo foi desenhado:
 
 - **Hospedagem e framework do servidor Dart.** O desenho mostra o servidor sem
   dizer onde ele roda nem com qual framework: a equipe ainda vai definir
-  (ADR `2026-11-24-servidor-dart-para-a-logica-da-fila`).
+  (ADR `2026-11-24-servidor-dart-para-a-logica-da-fila`). Há uma proposta
+  em discussão, ainda não aceita: ADR `2026-11-27-hospedagem-e-framework-do-servidor-dart`
+  (status Proposto).
 - **Quem avança a fila.** A visita não mostrou quem opera o painel (pergunta 8
   em `docs/requisitos/requisitos.md`), por isso o desenho diz "equipe da
   unidade". "Administrador" é só quem configura a unidade.
