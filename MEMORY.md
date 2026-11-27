@@ -70,7 +70,13 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   considera. A visita não confirmou o critério real (só "um pouco de tudo?") e
   a unidade lista idosos 60+ como prioritários; ver premissa P3.
 - A unidade tem duas etapas (triagem e consulta) e o núcleo é uma fila só.
-  Precisa evoluir (RF25), por um ADR que ainda não foi escrito.
+  Decidido no ADR docs/adr/2026-11-24-etapas-e-estados-do-paciente.md (aceito
+  por Miguel em 2026-11-26; issue #23): o estado do paciente fica num registro
+  único (uma tabela), com cinco estados, e há uma `Fila` por etapa montada a
+  partir dele: triagem por ordem de chegada e consulta por risco. **A ordem
+  real de cada fila segue em aberto (P3); as duas regras são de trabalho, só
+  para poder testar.** A regra por risco e a mudança de etapa
+  ainda não existem no núcleo (RF25).
 - Decisões de projeto do algoritmo: seis convenções internas decididas e
   travadas por testes (ordem calculada na hora, desempate pela ordem de entrada,
   `null` versus erro, posição a partir de 1, retrato em cópia, a `Fila` só usa o
@@ -104,8 +110,6 @@ Curto e curado. Atualize só via PR. Detalhes ficam nos links.
   Miguel em 2026-11-26; issue #23).
 
 ## Propostas abertas
-- ADR da fila em duas etapas (triagem e consulta, RF25): a propor, ainda não
-  escrito.
 - ADR "Hospedagem e framework do servidor Dart" (Proposto): Render grátis em
   Docker, região Virgínia, com Dart Frog; Cloud Run como plano B. Falta um
   experimento curto antes de aceitar. Ver
